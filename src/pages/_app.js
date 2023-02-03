@@ -4,11 +4,12 @@ import * as React from "react";
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "components/Navbar";
-
+import theme from "./theme";
+import Fonts from "./Fonts";
 
 export default function App({ Component, pageProps }) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Navbar/>
       <Component {...pageProps} />
     </ChakraProvider>
