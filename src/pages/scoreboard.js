@@ -47,17 +47,6 @@ function scoreboard() {
     // console.log(x);
   }
 
-  // useEffect(() => {
-  //   if (isReset === true) {
-  //     set_score_a(0);
-  //     set_score_b(0);
-  //     set_set_a(0);
-  //     set_set_b(0);
-  //     setIsReset(false);
-  //   }
-  //   console.log(isReset);
-  // }, [isReset]);
-
   function addScoreA() {
     reState(addScoreTeamA());
   }
@@ -160,6 +149,40 @@ function scoreboard() {
     // backUpVariables(teamA.getScore(), teamA.getWinSet(), teamB.getScore(), teamB.getWinSet(), GameScore.getSportName(), GameScore.getSetPoint(), GameScore.getNumOfSetToWin());
   }
 
+  // Press key from keyboard to Add, Sub , Reset score.
+  useEffect(() => {
+    const keyDownHandler = event => {
+      console.log('User pressed: ', event.key);
+
+      if (event.key === 'a') {
+        event.preventDefault();
+        addScoreA();
+      }
+      if (event.key === 's') {
+        event.preventDefault();
+        addScoreB();
+      }
+      if (event.key === 'z') {
+        event.preventDefault();
+        subtractScoreA();
+      }
+      if (event.key === 'x') {
+        event.preventDefault();
+        subtractScoreB();
+      }
+      if (event.key === 'r') {
+        event.preventDefault();
+        resetScoreAndSetButton();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
   return (
     // Container of Scoreboard
     <Container maxW="100vw" h="100vh" bg="#061435" centerContent pos="relative">
@@ -258,7 +281,7 @@ function scoreboard() {
             mr={1}
           >
             <Center>
-              <Text color="black" fontSize="2xl">
+              <Text color="black" fontSize="2xl" userSelect="none">
                 {set_a}
               </Text>
             </Center>
@@ -280,7 +303,7 @@ function scoreboard() {
             ml={1}
           >
             <Center>
-              <Text color="black" fontSize="2xl">
+              <Text color="black" fontSize="2xl" userSelect="none">
                 {set_b}
               </Text>
             </Center>
