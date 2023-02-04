@@ -22,10 +22,20 @@ function scoreboard() {
   const [score_b, set_score_b] = useState(0);
   const [set_a, set_set_a] = useState(0);
   const [set_b, set_set_b] = useState(0);
-  const [isReset, setIsReset] = useState(false);
+  // const [onKey, setOnKey] = useState('');
+
+//   const onKeyHandler = (event) => {
+//     // changing the state to the name of the key
+//   // which is pressed
+//   setOnKey(event.key);
+// };
+//   useEffect(()=>{
+//     if(onKey)
+//   })
 
   function reState(x) {
-    let scoreA = x[0],
+    if(x) {
+      let scoreA = x[0],
       scoreB = x[1];
     let setA = x[2],
       setB = x[3];
@@ -33,6 +43,7 @@ function scoreboard() {
     set_score_b(scoreB);
     set_set_a(setA);
     set_set_b(setB);
+    }
     // console.log(x);
   }
 
@@ -343,6 +354,7 @@ function scoreboard() {
           justifyContent="center"
           alignItems="center"
           onClick={addScoreA}
+          // onKeyPress={(e)=>{onKeyHandler(e)}}
         >
           <Text fontSize="380" userSelect="none">
             {score_a}
