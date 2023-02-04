@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Container, VStack } from "@chakra-ui/react";
+import { useState, useEffect, useRef } from "react";
+import { Container, VStack, useBoolean } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
@@ -13,6 +13,7 @@ import {
   faPlay,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
+import ReactStopwatch from "react-stopwatch";
 
 const teamA = new ScorePlayer1("Team A");
 const teamB = new ScorePlayer2("Team B");
@@ -22,27 +23,33 @@ function scoreboard() {
   const [score_b, set_score_b] = useState(0);
   const [set_a, set_set_a] = useState(0);
   const [set_b, set_set_b] = useState(0);
-  // const [onKey, setOnKey] = useState('');
+  const [time, setTime] = useState(0);
+  // const [running, setRunning] = useState(false);
+  const [running, setRunning] = useBoolean();
+  const timeToString = ("0" + Math.floor((time / 60000) % 60)).slice(-2)+":"+("0" + Math.floor((time / 1000) % 60)).slice(-2)+":"+("0" + ((time / 10) % 100)).slice(-2)
 
-//   const onKeyHandler = (event) => {
-//     // changing the state to the name of the key
-//   // which is pressed
-//   setOnKey(event.key);
-// };
-//   useEffect(()=>{
-//     if(onKey)
-//   })
+  useEffect(() => {
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [running]);
 
   function reState(x) {
-    if(x) {
+    if (x) {
       let scoreA = x[0],
-      scoreB = x[1];
-    let setA = x[2],
-      setB = x[3];
-    set_score_a(scoreA);
-    set_score_b(scoreB);
-    set_set_a(setA);
-    set_set_b(setB);
+        scoreB = x[1];
+      let setA = x[2],
+        setB = x[3];
+      set_score_a(scoreA);
+      set_score_b(scoreB);
+      set_set_a(setA);
+      set_set_b(setB);
     }
     // console.log(x);
   }
@@ -66,6 +73,7 @@ function scoreboard() {
   function resetScoreAndSetButton() {
     resetScoreAndSet();
     reState([0, 0, 0, 0]);
+    setTime(0);
     // setIsReset(true);
 
     // console.log(score_a, score_b , set_a, set_b)
@@ -143,7 +151,7 @@ function scoreboard() {
   function resetScoreAndSet() {
     teamA.setScore(0);
     teamB.setScore(0);
-    GameScore.resetScoreAndSet(teamA, teamB)
+    GameScore.resetScoreAndSet(teamA, teamB);
     // updateScoreAndSet();
     // GameScore.updateScoreAndSet();
     // backUpVariables(teamA.getScore(), teamA.getWinSet(), teamB.getScore(), teamB.getWinSet(), GameScore.getSportName(), GameScore.getSetPoint(), GameScore.getNumOfSetToWin());
@@ -151,35 +159,35 @@ function scoreboard() {
 
   // Press key from keyboard to Add, Sub , Reset score.
   useEffect(() => {
-    const keyDownHandler = event => {
-      console.log('User pressed: ', event.key);
+    const keyDownHandler = (event) => {
+      console.log("User pressed: ", event.key);
 
-      if (event.key === 'a') {
+      if (event.key === "a") {
         event.preventDefault();
         addScoreA();
       }
-      if (event.key === 's') {
+      if (event.key === "s") {
         event.preventDefault();
         addScoreB();
       }
-      if (event.key === 'z') {
+      if (event.key === "z") {
         event.preventDefault();
         subtractScoreA();
       }
-      if (event.key === 'x') {
+      if (event.key === "x") {
         event.preventDefault();
         subtractScoreB();
       }
-      if (event.key === 'r') {
+      if (event.key === "r") {
         event.preventDefault();
         resetScoreAndSetButton();
       }
     };
 
-    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener("keydown", keyDownHandler);
 
     return () => {
-      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
 
@@ -259,6 +267,7 @@ function scoreboard() {
             color="white"
             // pos="absolute"
             borderColor="white"
+            onClick={setRunning.toggle}
           >
             <Center>
               <Text color="black" fontSize="2xl" userSelect="none">
@@ -342,7 +351,11 @@ function scoreboard() {
       >
         <Center>
           <Text color="black" fontSize="2xl" userSelect="none">
-            00:00:00
+            {/* {time} */}
+            {/* <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span> */}
+            {/* <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span> */}
+            {/* <span>{("0" + ((time / 10) % 100)).slice(-2)}</span> */}
+            {timeToString}
           </Text>
         </Center>
       </Box>
