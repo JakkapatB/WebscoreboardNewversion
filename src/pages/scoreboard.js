@@ -1,30 +1,174 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Container, VStack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { Center, Square, Circle } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
+import { GameScore, ScorePlayer1, ScorePlayer2 } from "./is";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPause,
+  faPlay,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
+
+const teamA = new ScorePlayer1("Team A");
+const teamB = new ScorePlayer2("Team B");
 
 function scoreboard() {
+  const [score_a, set_score_a] = useState(0);
+  const [score_b, set_score_b] = useState(0);
+  const [set_a, set_set_a] = useState(0);
+  const [set_b, set_set_b] = useState(0);
+  const [isReset, setIsReset] = useState(false);
+
+  function reState(x) {
+    let scoreA = x[0],
+      scoreB = x[1];
+    let setA = x[2],
+      setB = x[3];
+    set_score_a(scoreA);
+    set_score_b(scoreB);
+    set_set_a(setA);
+    set_set_b(setB);
+    // console.log(x);
+  }
+
+  // useEffect(() => {
+  //   if (isReset === true) {
+  //     set_score_a(0);
+  //     set_score_b(0);
+  //     set_set_a(0);
+  //     set_set_b(0);
+  //     setIsReset(false);
+  //   }
+  //   console.log(isReset);
+  // }, [isReset]);
+
+  function addScoreA() {
+    reState(addScoreTeamA());
+  }
+
+  function addScoreB() {
+    reState(addScoreTeamB());
+  }
+
+  function subtractScoreA() {
+    reState(subtractScoreTeamA());
+  }
+
+  function subtractScoreB() {
+    reState(subtractScoreTeamB());
+  }
+
+  function resetScoreAndSetButton() {
+    resetScoreAndSet();
+    reState([0, 0, 0, 0]);
+    // setIsReset(true);
+
+    // console.log(score_a, score_b , set_a, set_b)
+  }
+
+  function addScoreTeamA() {
+    // GameScore.getNumOfSetToWin();
+    // console.log(GameScore.numOfSetToWin);
+
+    if (
+      teamA.getWinSet() < GameScore.getNumOfSetToWin() &&
+      teamB.getWinSet() < GameScore.getNumOfSetToWin()
+    ) {
+      teamA.addScore();
+      GameScore.updateScore(teamA, teamB);
+      // const data = getDataArray();
+      // console.log(typeof(data));
+      // console.log(data[0]);
+      // backUpVariables(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+      // backUpVariables();
+      // updateScoreAndSet()
+      let scoreA, scoreB;
+      let dataReturn = GameScore.updateScore(teamA, teamB);
+      // console.log(scoreA, scoreB, setA, setB);
+      console.log(dataReturn);
+
+      return dataReturn;
+    } else {
+      alert("เอาล่ะ มันชนะแล้วลูกพี่");
+    }
+  }
+  function subtractScoreTeamA() {
+    teamA.subtractScore();
+    // updateScoreAndSet()
+    // backUpVariables(teamA.getScore(), teamA.getWinSet(), teamB.getScore(), teamB.getWinSet(), GameScore.getSportName(), GameScore.getSetPoint(), GameScore.getNumOfSetToWin());
+    // backUpVariables();
+    GameScore.updateScore(teamA, teamB);
+    let dataReturn = GameScore.updateScore(teamA, teamB);
+    return dataReturn;
+  }
+
+  function addScoreTeamB() {
+    if (
+      teamA.getWinSet() < GameScore.getNumOfSetToWin() &&
+      teamB.getWinSet() < GameScore.getNumOfSetToWin()
+    ) {
+      teamB.addScore();
+      GameScore.updateScore(teamA, teamB);
+      // const data = getDataArray();
+      // console.log(typeof(data));
+      // console.log(data[0]);
+      // backUpVariables(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+      // backUpVariables();
+      // updateScoreAndSet()
+      let scoreA, scoreB;
+      let dataReturn = GameScore.updateScore(teamA, teamB);
+      // console.log(scoreA, scoreB, setA, setB);
+      console.log(dataReturn);
+
+      return dataReturn;
+    } else {
+      alert("เอาล่ะ มันชนะแล้วลูกพี่");
+    }
+  }
+  function subtractScoreTeamB() {
+    teamB.subtractScore();
+    // updateScoreAndSet()
+    // backUpVariables(teamA.getScore(), teamA.getWinSet(), teamB.getScore(), teamB.getWinSet(), GameScore.getSportName(), GameScore.getSetPoint(), GameScore.getNumOfSetToWin());
+    // backUpVariables();
+    GameScore.updateScore(teamA, teamB);
+    let dataReturn = GameScore.updateScore(teamA, teamB);
+    return dataReturn;
+  }
+
+  function resetScoreAndSet() {
+    teamA.setScore(0);
+    teamB.setScore(0);
+    GameScore.resetScoreAndSet(teamA, teamB)
+    // updateScoreAndSet();
+    // GameScore.updateScoreAndSet();
+    // backUpVariables(teamA.getScore(), teamA.getWinSet(), teamB.getScore(), teamB.getWinSet(), GameScore.getSportName(), GameScore.getSetPoint(), GameScore.getNumOfSetToWin());
+  }
+
   return (
     // Container of Scoreboard
     <Container maxW="100vw" h="100vh" bg="#061435" centerContent pos="relative">
-      <VStack pos="absolute" spacing={1} h="100%">
+      <VStack pos="absolute" spacing={1}>
         {/* Team name and Button */}
         <Flex>
+          {/* Reset button */}
           <Box
-          opacity={0.5}
+            opacity={0.5}
             bg="#ffffff"
             w="5vw"
             p={3}
             color="white"
             // pos="absolute"
             borderColor="white"
+            onClick={resetScoreAndSetButton}
           >
             <Center>
-              <Text color="black" fontSize="2xl">
-                0
+              <Text color="black" fontSize="2xl" userSelect="none">
+                <FontAwesomeIcon icon={faRotateRight} />
               </Text>
             </Center>
           </Box>
@@ -41,7 +185,7 @@ function scoreboard() {
             mr={1}
           >
             <Center>
-              <Text color="black" fontSize="2xl">
+              <Text color="black" fontSize="2xl" userSelect="none">
                 Prayuth
               </Text>
             </Center>
@@ -67,14 +211,14 @@ function scoreboard() {
             mr={2}
           >
             <Center>
-              <Text color="black" fontSize="2xl">
+              <Text color="black" fontSize="2xl" userSelect="none">
                 Pravit
               </Text>
             </Center>
           </Box>
 
           <Box
-          opacity={0.5}
+            opacity={0.5}
             bg="#ffffff"
             w="5vw"
             p={3}
@@ -83,8 +227,9 @@ function scoreboard() {
             borderColor="white"
           >
             <Center>
-              <Text color="black" fontSize="2xl">
-                0
+              <Text color="black" fontSize="2xl" userSelect="none">
+                <FontAwesomeIcon icon={faPlay} />
+                <FontAwesomeIcon icon={faPause} />
               </Text>
             </Center>
           </Box>
@@ -103,7 +248,7 @@ function scoreboard() {
           >
             <Center>
               <Text color="black" fontSize="2xl">
-                0
+                {set_a}
               </Text>
             </Center>
           </Box>
@@ -125,7 +270,7 @@ function scoreboard() {
           >
             <Center>
               <Text color="black" fontSize="2xl">
-                0
+                {set_b}
               </Text>
             </Center>
           </Box>
@@ -142,9 +287,10 @@ function scoreboard() {
         borderColor="white"
         bottom="0"
         left={0}
+        onClick={subtractScoreA}
       >
         <Center>
-          <Text color="black" fontSize="2xl">
+          <Text color="black" fontSize="2xl" userSelect="none">
             -1
           </Text>
         </Center>
@@ -161,7 +307,7 @@ function scoreboard() {
         bottom="0"
       >
         <Center>
-          <Text color="black" fontSize="2xl">
+          <Text color="black" fontSize="2xl" userSelect="none">
             00:00:00
           </Text>
         </Center>
@@ -176,9 +322,10 @@ function scoreboard() {
         borderColor="white"
         right={0}
         bottom="0"
+        onClick={subtractScoreB}
       >
         <Center>
-          <Text color="black" fontSize="2xl">
+          <Text color="black" fontSize="2xl" userSelect="none">
             -1
           </Text>
         </Center>
@@ -195,8 +342,11 @@ function scoreboard() {
           color="white"
           justifyContent="center"
           alignItems="center"
+          onClick={addScoreA}
         >
-          <Text fontSize="380">0</Text>
+          <Text fontSize="380" userSelect="none">
+            {score_a}
+          </Text>
         </Flex>
         {/* // Scoreboard Team 2 */}
         <Flex
@@ -206,12 +356,14 @@ function scoreboard() {
           color="white"
           justifyContent="center"
           alignItems="center"
+          onClick={addScoreB}
         >
-          <Text fontSize="380">0</Text>
+          <Text fontSize="380" userSelect="none">
+            {score_b}
+          </Text>
         </Flex>
       </Flex>
     </Container>
   );
 }
-
 export default scoreboard;
