@@ -4,7 +4,14 @@ import { Container, VStack, useBoolean } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import { Center, Square, Circle } from "@chakra-ui/react";
+import {
+  Center,
+  Square,
+  Circle,
+  Editable,
+  EditableInput,
+  EditablePreview,
+} from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { GameScore, ScorePlayer1, ScorePlayer2 } from "./is";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +33,12 @@ function scoreboard() {
   const [time, setTime] = useState(0);
   // const [running, setRunning] = useState(false);
   const [running, setRunning] = useBoolean();
-  const timeToString = ("0" + Math.floor((time / 60000) % 60)).slice(-2)+":"+("0" + Math.floor((time / 1000) % 60)).slice(-2)+":"+("0" + ((time / 10) % 100)).slice(-2)
+  const timeToString =
+    ("0" + Math.floor((time / 60000) % 60)).slice(-2) +
+    ":" +
+    ("0" + Math.floor((time / 1000) % 60)).slice(-2) +
+    ":" +
+    ("0" + ((time / 10) % 100)).slice(-2);
 
   useEffect(() => {
     let interval;
@@ -162,23 +174,23 @@ function scoreboard() {
     const keyDownHandler = (event) => {
       console.log("User pressed: ", event.key);
 
-      if (event.key === "a") {
+      if (event.key === ";") {
         event.preventDefault();
         addScoreA();
       }
-      if (event.key === "s") {
+      if (event.key === "'") {
         event.preventDefault();
         addScoreB();
       }
-      if (event.key === "z") {
+      if (event.key === ".") {
         event.preventDefault();
         subtractScoreA();
       }
-      if (event.key === "x") {
+      if (event.key === "/") {
         event.preventDefault();
         subtractScoreB();
       }
-      if (event.key === "r") {
+      if (event.key === "]") {
         event.preventDefault();
         resetScoreAndSetButton();
       }
@@ -227,9 +239,18 @@ function scoreboard() {
             mr={1}
           >
             <Center>
-              <Text color="black" fontSize="2xl" userSelect="none">
-                Prayuth
-              </Text>
+              {/* <Text color="black" fontSize="2xl" userSelect="none">
+                Prayuth Chan
+              </Text> */}
+              <Editable
+                color="black"
+                fontSize="2xl"
+                defaultValue="Prayuth Chan"
+                userSelect="none"
+              >
+                <EditablePreview />
+                <EditableInput />
+              </Editable>
             </Center>
           </Box>
 
@@ -253,9 +274,13 @@ function scoreboard() {
             mr={2}
           >
             <Center>
-              <Text color="black" fontSize="2xl" userSelect="none">
-                Pravit
-              </Text>
+              {/* <Text color="black" fontSize="2xl" userSelect="none">
+                Pravit Wong
+              </Text> */}
+              <Editable color="black" fontSize="2xl" defaultValue="Pravit Wong">
+                <EditablePreview />
+                <EditableInput />
+              </Editable>
             </Center>
           </Box>
 
