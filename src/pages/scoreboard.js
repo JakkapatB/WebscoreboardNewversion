@@ -33,6 +33,18 @@ function scoreboard() {
   const [time, setTime] = useState(0);
   // const [running, setRunning] = useState(false);
   const [running, setRunning] = useBoolean();
+  const [teamAName, setTeamAName] = useState("Team A");
+  const [teamBName, setTeamBName] = useState("Team B");
+
+  const onChange_A_NameHandler = (event) => {
+    setTeamAName(event.target.value)
+    // console.log(teamAName)
+  };
+  const onChange_B_NameHandler = (event) => {
+    setTeamBName(event.target.value)
+    // console.log(teamBName)
+  };
+
   const timeToString =
     ("0" + Math.floor((time / 60000) % 60)).slice(-2) +
     ":" +
@@ -62,6 +74,7 @@ function scoreboard() {
       set_score_b(scoreB);
       set_set_a(setA);
       set_set_b(setB);
+      
     }
     // console.log(x);
   }
@@ -245,11 +258,12 @@ function scoreboard() {
               <Editable
                 color="black"
                 fontSize="2xl"
-                defaultValue="Prayuth Chan"
+                defaultValue={teamAName}
                 userSelect="none"
+                
               >
                 <EditablePreview />
-                <EditableInput />
+                <EditableInput onChange={onChange_A_NameHandler}/>
               </Editable>
             </Center>
           </Box>
@@ -277,9 +291,9 @@ function scoreboard() {
               {/* <Text color="black" fontSize="2xl" userSelect="none">
                 Pravit Wong
               </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue="Pravit Wong">
+              <Editable color="black" fontSize="2xl" defaultValue={teamBName} >
                 <EditablePreview />
-                <EditableInput />
+                <EditableInput onChange={onChange_B_NameHandler}/>
               </Editable>
             </Center>
           </Box>
