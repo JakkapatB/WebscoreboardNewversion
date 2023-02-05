@@ -27,7 +27,6 @@ import {
   faPlay,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
-import WinnerModal from "./winnerModal";
 
 const teamA = new ScorePlayer1("Team A");
 const teamB = new ScorePlayer2("Team B");
@@ -270,7 +269,7 @@ function scoreboard() {
             </CardBody>
             <CardFooter>
               <Button mr={10} colorScheme="blue" onClick={resetScoreAndSetButton}>Restart</Button>
-              <Button ml={10} colorScheme="blue" onClick={resetScoreAndSetButton}>Save</Button>
+              <Button ml={10} colorScheme="blue" >Save</Button>
             </CardFooter>
           </Card>
         </Flex>
