@@ -1,9 +1,17 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Container, VStack, useBoolean } from "@chakra-ui/react";
+import { Container, VStack, useBoolean, useDisclosure } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+} from "@chakra-ui/react";
 import {
   Center,
   Square,
@@ -12,7 +20,6 @@ import {
   EditableInput,
   EditablePreview,
 } from "@chakra-ui/react";
-import { Grid, GridItem } from "@chakra-ui/react";
 import { GameScore, ScorePlayer1, ScorePlayer2 } from "./is";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,7 +27,7 @@ import {
   faPlay,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
-import ReactStopwatch from "react-stopwatch";
+import WinnerModal from "./winnerModal";
 
 const teamA = new ScorePlayer1("Team A");
 const teamB = new ScorePlayer2("Team B");
@@ -35,13 +42,16 @@ function scoreboard() {
   const [running, setRunning] = useBoolean();
   const [teamAName, setTeamAName] = useState("Team A");
   const [teamBName, setTeamBName] = useState("Team B");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isAWinner, setIsAWinner] = useState(false);
+  const [isBWinner, setIsBWinner] = useState(false);
 
   const onChange_A_NameHandler = (event) => {
-    setTeamAName(event.target.value)
+    setTeamAName(event.target.value);
     // console.log(teamAName)
   };
   const onChange_B_NameHandler = (event) => {
-    setTeamBName(event.target.value)
+    setTeamBName(event.target.value);
     // console.log(teamBName)
   };
 
@@ -74,7 +84,6 @@ function scoreboard() {
       set_score_b(scoreB);
       set_set_a(setA);
       set_set_b(setB);
-      
     }
     // console.log(x);
   }
@@ -127,7 +136,12 @@ function scoreboard() {
 
       return dataReturn;
     } else {
+      setIsAWinner(true);
       alert("เอาล่ะ มันชนะแล้วลูกพี่");
+      onOpen();
+      console.log(isAWinner);
+      console.log(onOpen);
+      console.log(isOpen);
     }
   }
   function subtractScoreTeamA() {
@@ -161,6 +175,7 @@ function scoreboard() {
       return dataReturn;
     } else {
       alert("เอาล่ะ มันชนะแล้วลูกพี่");
+      setIsBWinner(true);
     }
   }
   function subtractScoreTeamB() {
@@ -216,9 +231,55 @@ function scoreboard() {
     };
   }, []);
 
+  const showWinner = () => {
+    if (true) {
+      return (
+        <WinnerModal
+          pos="absolute"
+          onOpen={onOpen}
+          isOpen={isOpen}
+        ></WinnerModal>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   return (
     // Container of Scoreboard
     <Container maxW="100vw" h="100vh" bg="#061435" centerContent pos="relative">
+      {GameScore.haveWinner ? (
+        <Flex
+          zIndex={1}
+          pos="absolute"
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          w="100%"
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(0deg)"
+        >
+          <Card align="center" w="50vw">
+            <CardHeader>
+              <Heading size="xl"> The competition is over </Heading>
+            </CardHeader>
+            <CardBody>
+              <Text>
+                View a summary of all your customers over the last month.
+              </Text>
+            </CardBody>
+            <CardFooter>
+              <Button mr={10} colorScheme="blue" onClick={resetScoreAndSetButton}>Restart</Button>
+              <Button ml={10} colorScheme="blue" onClick={resetScoreAndSetButton}>Save</Button>
+            </CardFooter>
+          </Card>
+        </Flex>
+      ) : (
+        <div></div>
+      )}
+
+      {/* {showWinner} */}
+
       <VStack pos="absolute" spacing={1}>
         {/* Team name and Button */}
         <Flex>
@@ -260,10 +321,9 @@ function scoreboard() {
                 fontSize="2xl"
                 defaultValue={teamAName}
                 userSelect="none"
-                
               >
                 <EditablePreview />
-                <EditableInput onChange={onChange_A_NameHandler}/>
+                <EditableInput onChange={onChange_A_NameHandler} />
               </Editable>
             </Center>
           </Box>
@@ -291,9 +351,9 @@ function scoreboard() {
               {/* <Text color="black" fontSize="2xl" userSelect="none">
                 Pravit Wong
               </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue={teamBName} >
+              <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
                 <EditablePreview />
-                <EditableInput onChange={onChange_B_NameHandler}/>
+                <EditableInput onChange={onChange_B_NameHandler} />
               </Editable>
             </Center>
           </Box>
