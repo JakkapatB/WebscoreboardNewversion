@@ -172,7 +172,6 @@ function scoreboard() {
       return dataReturn;
     } else {
       alert("เอาล่ะ มันชนะแล้วลูกพี่");
-      setIsBWinner(true);
     }
   }
   function subtractScoreTeamB() {
