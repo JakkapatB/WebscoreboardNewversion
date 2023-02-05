@@ -42,8 +42,7 @@ function scoreboard() {
   const [teamAName, setTeamAName] = useState("Team A");
   const [teamBName, setTeamBName] = useState("Team B");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isAWinner, setIsAWinner] = useState(false);
-  const [isBWinner, setIsBWinner] = useState(false);
+  const [isWinner, setIsWinner] = useState(false);
 
   const onChange_A_NameHandler = (event) => {
     setTeamAName(event.target.value);
@@ -53,6 +52,7 @@ function scoreboard() {
     setTeamBName(event.target.value);
     // console.log(teamBName)
   };
+  GameScore.selectSportAndSetPointToWin('Table tennis') //เปลี่ยนกีฬาตรงนี้
 
   const timeToString =
     ("0" + Math.floor((time / 60000) % 60)).slice(-2) +
@@ -135,10 +135,8 @@ function scoreboard() {
 
       return dataReturn;
     } else {
-      setIsAWinner(true);
       alert("เอาล่ะ มันชนะแล้วลูกพี่");
       onOpen();
-      console.log(isAWinner);
       console.log(onOpen);
       console.log(isOpen);
     }
