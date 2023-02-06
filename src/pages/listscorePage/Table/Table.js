@@ -199,7 +199,7 @@ const DataTable = () => {
               top="0px"
               style={{ overflow: "scroll" }}
               className="font-notosan"
-              bg="#64b5f6"
+              bg="#323273"
             >
               {headerGroups.map((headerGroup, indexKey) => (
                 <Tr p="0" key={indexKey} {...headerGroup.getHeaderGroupProps()}>
@@ -209,8 +209,8 @@ const DataTable = () => {
                       p="1em"
                       className="th1"
                       key={columnIndex}
-                      fontSize="15.5px"
-                      color={"black"}
+                      fontSize="16.5px"
+                      color={"#Dfdfe8"}
                       bg-color={columnIndex % 2 === 1 ? "pink" : "green"}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
