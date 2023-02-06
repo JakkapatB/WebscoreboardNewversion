@@ -89,6 +89,7 @@ function scoreboard() {
 
   function addScoreA() {
     reState(addScoreTeamA());
+    // console.log(isWinner)
   }
 
   function addScoreB() {
@@ -227,24 +228,20 @@ function scoreboard() {
     };
   }, []);
 
-  const showWinner = () => {
-    if (true) {
-      return (
-        <WinnerModal
-          pos="absolute"
-          onOpen={onOpen}
-          isOpen={isOpen}
-        ></WinnerModal>
-      );
-    } else {
-      return <></>;
-    }
-  };
+  const setWinnerToFalse =()=>{
+    setIsWinner(false);
+    GameScore.haveWinner = false;
+  }
+  useEffect(()=>{
+    setIsWinner(GameScore.haveWinner)
+    console.log(isWinner)
+  })
+
 
   return (
     // Container of Scoreboard
     <Container maxW="100vw" h="100vh" bg="#061435" centerContent pos="relative">
-      {GameScore.haveWinner ? (
+      {isWinner ? (
         <Flex
           zIndex={1}
           pos="absolute"
@@ -266,7 +263,7 @@ function scoreboard() {
             </CardBody>
             <CardFooter>
               <Button mr={10} colorScheme="blue" onClick={resetScoreAndSetButton}>Restart</Button>
-              <Button ml={10} colorScheme="blue" >Save</Button>
+              <Button ml={10} colorScheme="blue" onClick={setWinnerToFalse} >Save</Button>
             </CardFooter>
           </Card>
         </Flex>
