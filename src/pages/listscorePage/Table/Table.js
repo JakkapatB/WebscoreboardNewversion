@@ -108,8 +108,8 @@ const DataTable = () => {
       h="100vh"
       bgGradient="linear(to-tl,#E2c98c,#08203e,#08203e)"
     >
-      <SimpleGrid minChildWidth='120px' spacing='40px'>
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
+      <SimpleGrid minChildWidth='120px' spacing='40px' filter='grayscale(100%)'>
+        <Image  boxSize="200px" src="lee1.jpg" alt="lee" />
         <Image boxSize="200px" src="lee1.jpg" alt="lee" />
         <Image boxSize="200px" src="lee1.jpg" alt="lee" />
         <Image boxSize="200px" src="lee1.jpg" alt="lee" />
