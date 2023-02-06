@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Center, Square, Circle } from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
-
 import {
   Table,
   Thead,
@@ -100,10 +99,11 @@ const DataTable = () => {
       setSortBy([tempColumn]);
     }
   };
+  
 
   console.log({ cols: allColumns });
   return (
-    <Container maxW="100vw" h="100vh" bgGradient="linear(to-r,#08203e,#292E49)">
+    <Container maxW="100vw" h="100vh" bgGradient="linear(to-tl,#E2c98c,#08203e,#08203e)">
       <Container maxW="6xl">
         {/* <Text p='1em' fontSize='2lpx' textAlign='center' ></Text> */}
         <Box>
@@ -128,7 +128,7 @@ const DataTable = () => {
                   bg: "red.400",
                   zIndex: -1,
                 }}
-                bgGradient="linear(to-l, #ffffff, #ffffff)"
+                bgGradient="linear(to-l, #Dca720, #Ffc92b)"
                 bgClip="text"
               >
                 List Score
@@ -136,56 +136,10 @@ const DataTable = () => {
               <br />
             </Heading>
           </Center>
-          <Menu>
-            {/* button sorting */}
-            <MenuButton
-              alignSelf="center"
-              rightIcon={<ChevronDownIcon />}
-              variant="outline"
-              mx="1em"
-              size="xs"
-              as={Button}
-              colorScheme="blue"
-            >
-              Sort By
-            </MenuButton>
-            <MenuList color="gray.800" zIndex="3" minWidth="240px">
-              <MenuOptionGroup type="radio" onChange={(e) => handleSort(e)}>
-                {allColumns.map((column, idx) => (
-                  <MenuItemOption
-                    icon={
-                      column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <TriangleDownIcon />
-                        ) : (
-                          <TriangleUpIcon />
-                        )
-                      ) : (
-                        ""
-                      )
-                    }
-                    key={idx}
-                    value={column.id}
-                  >
-                    {column.Header}
-                  </MenuItemOption>
-                ))}
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
-          <Button
-            size="xs"
-            m="4px"
-            colorScheme="red"
-            variant="outline"
-            onClick={() => setSortBy([])}
-          >
-            Reset Sorting
-          </Button>
         </Box>
 
         <Text p="1em" fontSize="2lpx" textAlign="center"></Text>
-        <Box maxH="30em" overflowY="scroll">
+        <Box maxH="30em" overflowY="scroll" mt={5}>
           <Table
             {...getTableProps()}
             size="sm"
@@ -199,7 +153,7 @@ const DataTable = () => {
               top="0px"
               style={{ overflow: "scroll" }}
               className="font-notosan"
-              bg="#323273"
+              bg="#263c75"
             >
               {headerGroups.map((headerGroup, indexKey) => (
                 <Tr p="0" key={indexKey} {...headerGroup.getHeaderGroupProps()}>
