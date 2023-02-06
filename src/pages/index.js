@@ -48,7 +48,7 @@ function index() {
     toast({
       title: `The value got changed to ${value}!`,
       status: "success",
-      duration: 2000,
+      duration: 700,
     });
   };
 
@@ -96,9 +96,9 @@ function index() {
             );
           })}
         </HStack> */}
-        <Flex><Stack {...getRootProps()} w="100%" >
-          <Text>The selected radio is: {value}</Text>
-          <HStack>
+        <Center p={5}><Stack {...getRootProps()} w="50vw" >
+          <Text align="center" w="100%">The selected sport is: {value}</Text>
+          <HStack justifyContent="center">
             {avatars.map((avatar) => {
               return (
                 <CustomRadio
@@ -109,7 +109,7 @@ function index() {
               );
             })}
           </HStack>
-        </Stack></Flex>
+        </Stack></Center>
         
 
         <Flex w="20%" justifyContent="space-around" p={2}>
