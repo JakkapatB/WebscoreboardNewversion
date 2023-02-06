@@ -29,7 +29,7 @@ export default function CallToActionWithVideo() {
       h="auto"
       centerContent
       pos="relative"
-      bgGradient="linear(to-r,#08203e,#292E49)"
+      bgGradient="linear(to-r,#08203e,#08203e)"
     >
       <Container maxW={"7xl"}
       mb={40}
@@ -179,7 +179,7 @@ export default function CallToActionWithVideo() {
                 </Text>
               </Heading>
             </Center>
-            <SimpleGrid
+            {/* <SimpleGrid
               spacing={8}
               templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
               
@@ -315,7 +315,7 @@ export default function CallToActionWithVideo() {
                 </CardFooter>
               </Card>
               
-            </SimpleGrid>
+            </SimpleGrid> */}
           </Stack>
         </Stack>
       </Container>
