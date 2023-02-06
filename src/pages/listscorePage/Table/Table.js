@@ -108,13 +108,13 @@ const DataTable = () => {
       h="100vh"
       bgGradient="linear(to-tl,#08203e,#08203e)"
     >
-      <Container maxW="6xl">
+      <Container maxW="7xl">
         {/* <Text p='1em' fontSize='2lpx' textAlign='center' ></Text> */}
         <Box>
           <Center>
             {" "}
             <Heading
-              lineHeight={1.1}
+              lineHeight={1}
               fontWeight={700}
               fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
               mt={10}
@@ -143,7 +143,7 @@ const DataTable = () => {
         </Box>
 
         <Text p="1em" fontSize="2lpx" textAlign="center"></Text>
-        <Box maxH="30em" overflowY="scroll" mt={5}>
+        <Box maxH="30em" overflowY="auto" mt={10}>
           <Table
             {...getTableProps()}
             size="sm"
