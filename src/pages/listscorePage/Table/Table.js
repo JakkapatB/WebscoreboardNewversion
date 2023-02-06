@@ -106,18 +106,8 @@ const DataTable = () => {
     <Container
       maxW="100vw"
       h="100vh"
-      bgGradient="linear(to-tl,#E2c98c,#08203e,#08203e)"
+      bgGradient="linear(to-tl,#08203e,#08203e)"
     >
-      <SimpleGrid minChildWidth='120px' spacing='40px' filter='grayscale(100%)'>
-        <Image  boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-        <Image boxSize="200px" src="lee1.jpg" alt="lee" />
-      </SimpleGrid>
       <Container maxW="6xl">
         {/* <Text p='1em' fontSize='2lpx' textAlign='center' ></Text> */}
         <Box>
