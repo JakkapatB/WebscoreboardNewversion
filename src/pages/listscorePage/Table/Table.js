@@ -115,7 +115,7 @@ const DataTable = () => {
             {" "}
             <Heading
               lineHeight={1.1}
-              fontWeight={600}
+              fontWeight={700}
               fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
               mt={10}
             >
@@ -132,7 +132,7 @@ const DataTable = () => {
                   bg: "red.400",
                   zIndex: -1,
                 }}
-                bgGradient="linear(to-l, #Dca720, #Ffc92b)"
+                bgGradient="linear(to-l, #997c27, #ffce41)"
                 bgClip="text"
               >
                 List Score
