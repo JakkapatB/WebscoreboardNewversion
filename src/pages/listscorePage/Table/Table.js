@@ -48,6 +48,7 @@ const DataTable = () => {
     {
       columns,
       data,
+      initialState: { pageSize: 10 } 
     },
     useSortBy,
     usePagination
@@ -67,12 +68,12 @@ const DataTable = () => {
     pageOptions,
     gotoPage,
     pageCount,
-    state,
+    state ,
     setSortBy,
     allColumns,
   } = tableInstance;
 
-  const { pageSize, pageIndex } = state;
+  const { pageSize , pageIndex } = state;
 
   const [selectedSortColumn, setSelectedSortColumn] = useState({
     id: "",
@@ -104,11 +105,11 @@ const DataTable = () => {
   console.log({ cols: allColumns });
   return (
     <Container
-      maxW="100vw"
-      h="100vh"
+      maxW="auto"
+      maxH={"auto"}
       bgGradient="linear(to-tl,#08203e,#08203e)"
     >
-      <Container maxW="7xl">
+      <Container maxW="7xl" maxH="auto"  >
         {/* <Text p='1em' fontSize='2lpx' textAlign='center' ></Text> */}
         <Box>
           <Center>
@@ -132,7 +133,7 @@ const DataTable = () => {
                   bg: "red.400",
                   zIndex: -1,
                 }}
-                bgGradient="linear(to-l, #997c27, #ffce41)"
+                bgGradient="linear(to-tl,#ffce41, #f06778)"
                 bgClip="text"
               >
                 List Score
@@ -143,10 +144,10 @@ const DataTable = () => {
         </Box>
 
         <Text p="1em" fontSize="2lpx" textAlign="center"></Text>
-        <Box maxH="30em" overflowY="auto" mt={10}>
+        <Box maxH="auto" overflowY="auto" mt={5} mb ={8} >
           <Table
             {...getTableProps()}
-            size="sm"
+            size="md"
             variant="striped"
             colorScheme="gray"
           >
@@ -227,7 +228,7 @@ const DataTable = () => {
           mt={5}
         >
           <Spacer />
-          <Flex alignContent="center" justifyContent="space-around">
+          <Flex alignContent="center" justifyContent="space-around" mb={20}>
             <IconButton
               _focus={{ boxShadow: "" }}
               _hover={{ backgroundColor: "" }}

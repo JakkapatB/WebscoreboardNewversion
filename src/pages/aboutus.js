@@ -59,7 +59,7 @@ export default function CallToActionWithVideo() {
                   bg: "red.400",
                   zIndex: -1,
                 }}
-                bgGradient="linear(to-l, #F9D423, #e65c00)"
+                bgGradient="linear(to-tl,#ffce41, #f06778)"
                 bgClip="text"
               >
                 Game Trackers
