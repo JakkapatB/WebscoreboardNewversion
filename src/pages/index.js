@@ -164,7 +164,7 @@ function index() {
 
         <Flex w="20%" justifyContent="space-around" p={2}>
           <Button colorScheme="blue">Track</Button>
-          <Button colorScheme="blue">Join</Button>
+          {/* <Button colorScheme="blue">Join</Button> */}
         </Flex>
       </Container>
     </Container>
