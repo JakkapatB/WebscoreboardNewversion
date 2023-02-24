@@ -263,7 +263,7 @@ function scoreboard() {
   useEffect(()=>{
     // let yourID = localStorage.getItem("yourID");
     // const q = query(collection(db, "record"))
-    const yourID = '0piwqIWSJvbrsdgnNpVY'
+    const yourID = '1co1m8pjQMzgugQsToK4'
     let q = doc(db, "record", yourID)
     // let q = query(collection(db, "record"), where("id", "==", yourID));
     onSnapshot(q, (docs) => {
@@ -291,7 +291,7 @@ function scoreboard() {
     scoreArr.push(x["set-a"])
     scoreArr.push(x["set-b"])
     console.log('datax' + scoreArr);
-    console.log('x' + scoreArr)
+    // console.log('x=' + x["name-a"])
     reState(scoreArr);
     });
   },[])

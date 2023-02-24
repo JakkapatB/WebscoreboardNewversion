@@ -54,7 +54,7 @@ export async function listAll() {
     return querySnapshot;
 }
 
-export async function addNew(id, score_a, score_b, set_a, set_b, type, finished) {
+export async function addNew(id, score_a, score_b, set_a, set_b, type, finished, teamNameA="Team A", teamNameB = "Team B") {
     // // Add a new document in collection "cities"
     // // await setDoc(doc(db, "record", id), {
     // //     "score-a": score_a,
@@ -90,7 +90,9 @@ export async function addNew(id, score_a, score_b, set_a, set_b, type, finished)
         "score-b": score_b,
         "set-b": set_b,
         "type": type,
-        "finished": finished
+        "finished": finished,
+        "name-a": teamNameA,
+        "name-b": teamNameB
     });
 }
 // let dt = 'ok'
