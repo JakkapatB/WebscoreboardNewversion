@@ -91,27 +91,27 @@ const DataTable = () => {
     desc: false,
   });
 
-  function handleSort(e) {
-    let temp = Object.assign({}, selectedSortColumn);
-    temp["id"] = e;
-    setSelectedSortColumn(temp);
-    setSortBy([temp]);
-  }
+  // function handleSort(e) {
+  //   let temp = Object.assign({}, selectedSortColumn);
+  //   temp["id"] = e;
+  //   setSelectedSortColumn(temp);
+  //   setSortBy([temp]);
+  // }
 
-  const typeOfSort = (e) => {
-    let tempColumn;
-    if (e == "0") {
-      tempColumn = Object.assign({}, selectedSortColumn);
-      tempColumn["desc"] = false;
-      setSelectedSortColumn(tempColumn);
-      setSortBy([tempColumn]);
-    } else {
-      tempColumn = Object.assign({}, selectedSortColumn);
-      tempColumn["desc"] = true;
-      setSelectedSortColumn(tempColumn);
-      setSortBy([tempColumn]);
-    }
-  };
+  // const typeOfSort = (e) => {
+  //   let tempColumn;
+  //   if (e == "0") {
+  //     tempColumn = Object.assign({}, selectedSortColumn);
+  //     tempColumn["desc"] = false;
+  //     setSelectedSortColumn(tempColumn);
+  //     setSortBy([tempColumn]);
+  //   } else {
+  //     tempColumn = Object.assign({}, selectedSortColumn);
+  //     tempColumn["desc"] = true;
+  //     setSelectedSortColumn(tempColumn);
+  //     setSortBy([tempColumn]);
+  //   }
+  // };
 
   console.log({ cols: allColumns });
   return (
@@ -156,7 +156,7 @@ const DataTable = () => {
 
         <Text p="1em" fontSize="2lpx" textAlign="center"></Text>
         <Box maxH="auto" overflowY="auto" mt={5} mb={8}>
-          <Table
+        <Table
             {...getTableProps()}
             size="md"
             variant="striped"
@@ -204,6 +204,7 @@ const DataTable = () => {
             <Tbody className="body1" p="1em" {...getTableBodyProps()}>
             {page && page.length > 0 ? (
                 page.map((row) => {
+                  console.log(row);
                   prepareRow(row);
                   return (
                     <Tr className="tr1" {...row.getRowProps()}>
@@ -230,6 +231,8 @@ const DataTable = () => {
               )}
             </Tbody>
           </Table>
+
+          
           {/* go to page button */}
         </Box>
         <Flex

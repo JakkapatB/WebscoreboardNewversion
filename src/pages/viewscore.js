@@ -259,32 +259,46 @@ function scoreboard() {
 //       document.getElementById("score-b").innerHTML = doc.data()["score-b"];
 //     });
 //   }
+// useEffect(()=>{
+//   function updateScreen () {
+//     // let y = localStorage.getItem("id")
+//     console.log(88);
+//     let y = 
+//     let fecthData = async () => { 
+//       const x = await getDataByID(y)
+//       // console.log(data);
+//     console.log(x);
+    
+
+//     teamA.setTeamName(x["name-a"])
+//     teamA.setScore(x["score-a"])
+//     console.log(teamA.getScore());
+//     teamA.setWinSet(x["set-a"])
+    
+//     teamB.setTeamName(x["name-b"])
+//     teamB.setScore(x["score-b"])
+//     teamB.setWinSet(x["set-b"])
+
+//     set_score_a(teamA.getScore())
+//     set_score_b(teamB.getScore())
+//     set_set_a(teamA.getWinSet())
+//     set_set_b(teamB.getWinSet())
+//     }
+//     // const x = fecthData().catch(console.error);
+//     fecthData();
+//     console.log(5);
+    
+//   }
+//   updateScreen();
+// },[])
 
   useEffect(()=>{
-    // let yourID = localStorage.getItem("yourID");
-    // const q = query(collection(db, "record"))
-    const yourID = '1co1m8pjQMzgugQsToK4'
+    const yourID = localStorage.getItem('id')
     let q = doc(db, "record", yourID)
-    // let q = query(collection(db, "record"), where("id", "==", yourID));
     onSnapshot(q, (docs) => {
         let scoreArr = []
         console.log("ok558");
-    //   console.log("Current data: ", doc.data());
-
-        // docs.forEach(doc => {
-        //     let x = doc.data()
-        //     console.log('aa' + x);
-        //     scoreArr.push(x["score-a"])
-        //     scoreArr.push(x["score-b"])
-        //     scoreArr.push(x["set-a"])
-        //     scoreArr.push(x["set-b"])
-            
-        // });
-        //   let x = doc.data();
-        //   console.log(x["scora-1"]);
-    //   document.getElementById("score-a").innerHTML = doc.data()["score-a"];
-    //   document.getElementById("score-b").innerHTML = doc.data()["score-b"];
-    // set_score_a()
+ 
     let x= docs.data()
     scoreArr.push(x["score-a"])
     scoreArr.push(x["score-b"])
