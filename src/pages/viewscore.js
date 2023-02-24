@@ -75,17 +75,17 @@ function scoreboard() {
     ":" +
     ("0" + ((time / 10) % 100)).slice(-2);
 
-  useEffect(() => {
-    let interval;
-    if (running) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
-    } else if (!running) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [running]);
+//   useEffect(() => {
+//     let interval;
+//     if (running) {
+//       interval = setInterval(() => {
+//         setTime((prevTime) => prevTime + 10);
+//       }, 10);
+//     } else if (!running) {
+//       clearInterval(interval);
+//     }
+//     return () => clearInterval(interval);
+//   }, [running]);
 
   function reState(x) {
     if (x) {
@@ -209,38 +209,38 @@ function scoreboard() {
   }
 
   // Press key from keyboard to Add, Sub , Reset score.
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
+//   useEffect(() => {
+//     const keyDownHandler = (event) => {
+//       console.log("User pressed: ", event.key);
 
-      if (event.key === ";") {
-        event.preventDefault();
-        addScoreA();
-      }
-      if (event.key === "'") {
-        event.preventDefault();
-        addScoreB();
-      }
-      if (event.key === ".") {
-        event.preventDefault();
-        subtractScoreA();
-      }
-      if (event.key === "/") {
-        event.preventDefault();
-        subtractScoreB();
-      }
-      if (event.key === "]") {
-        event.preventDefault();
-        resetScoreAndSetButton();
-      }
-    };
+//       if (event.key === ";") {
+//         event.preventDefault();
+//         addScoreA();
+//       }
+//       if (event.key === "'") {
+//         event.preventDefault();
+//         addScoreB();
+//       }
+//       if (event.key === ".") {
+//         event.preventDefault();
+//         subtractScoreA();
+//       }
+//       if (event.key === "/") {
+//         event.preventDefault();
+//         subtractScoreB();
+//       }
+//       if (event.key === "]") {
+//         event.preventDefault();
+//         resetScoreAndSetButton();
+//       }
+//     };
 
-    document.addEventListener("keydown", keyDownHandler);
+//     document.addEventListener("keydown", keyDownHandler);
 
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
+//     return () => {
+//       document.removeEventListener("keydown", keyDownHandler);
+//     };
+//   }, []);
 
   const setWinnerToFalse = () => {
     setIsWinner(false);
@@ -323,7 +323,7 @@ function scoreboard() {
               <Button
                 mr={10}
                 colorScheme="blue"
-                onClick={resetScoreAndSetButton}
+                // onClick={resetScoreAndSetButton}
               >
                 Restart
               </Button>
@@ -351,7 +351,7 @@ function scoreboard() {
             color="white"
             // pos="absolute"
             borderColor="white"
-            onClick={resetScoreAndSetButton}
+            // onClick={resetScoreAndSetButton}
           >
             <Center>
               <Text color="black" fontSize="2xl" userSelect="none">
@@ -425,7 +425,7 @@ function scoreboard() {
             color="white"
             // pos="absolute"
             borderColor="white"
-            onClick={setRunning.toggle}
+            // onClick={setRunning.toggle}
           >
             <Center>
               <Text color="black" fontSize="2xl" userSelect="none">
@@ -488,7 +488,7 @@ function scoreboard() {
         borderColor="white"
         bottom="0"
         left={0}
-        onClick={subtractScoreA}
+        // onClick={subtractScoreA}
       >
         <Center>
           <Text color="black" fontSize="2xl" userSelect="none">
@@ -527,7 +527,7 @@ function scoreboard() {
         borderColor="white"
         right={0}
         bottom="0"
-        onClick={subtractScoreB}
+        // onClick={subtractScoreB}
       >
         <Center>
           <Text color="black" fontSize="2xl" userSelect="none">
@@ -547,7 +547,7 @@ function scoreboard() {
           color="white"
           justifyContent="center"
           alignItems="center"
-          onClick={addScoreA}
+        //   onClick={addScoreA}
           // onKeyPress={(e)=>{onKeyHandler(e)}}
         >
           <Text fontSize="380" userSelect="none">
@@ -562,7 +562,7 @@ function scoreboard() {
           color="white"
           justifyContent="center"
           alignItems="center"
-          onClick={addScoreB}
+        //   onClick={addScoreB}
         >
           <Text fontSize="380" userSelect="none">
             {score_b}
