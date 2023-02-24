@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "@chakra-ui/react";
 import { Heading, Flex, Button, Box } from "@chakra-ui/react";
 import {
@@ -13,6 +13,14 @@ import {
   chakra,
   Image,
   Center,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import RadioCard from "./RadioCard";
 import {
@@ -20,13 +28,27 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
 function index() {
+  const [id, setID] = useState(() => {
+    // const saved = localStorage.getItem("id");
+    if (typeof window !== 'undefined') {
+      // Perform localStorage action
+      const saved = localStorage.getItem('id')
+      const initialValue = JSON.parse(saved);
+      return initialValue || "";
+    }
+  });
+  
+  // const [IDinput, setIDinput] = useState("");
   const [input, setInput] = useState("");
 
-    const handleInputChange = (e) => setInput(e.target.value);
-    const isError = input === "";
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    // setIDinput(e.target.value)
+  };
+  const isError = input === "";
   // const options = ["Volleyball", "Badminton", "Sepak takraw","Table tennis"];
   // const { getRootProps, getRadioProps } = useRadioGroup({
   //   name: "sport",
@@ -35,12 +57,19 @@ function index() {
   // });
 
   // const group = getRootProps();
+  const idSetting = () => {
+    setID(input);
+    console.log(input);
+  };
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("id", JSON.stringify(id));
+  }, [id]);
 
   function CustomRadio(props) {
     const { image, ...radioProps } = props;
     const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } =
       useRadio(radioProps);
-    
 
     return (
       <chakra.label {...htmlProps} cursor="pointer">
@@ -92,8 +121,11 @@ function index() {
     onChange: handleChange,
   });
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [placement, setPlacement] = React.useState("bottom");
+
   return (
-    <Container maxW="100vw" h="165vh" bgGradient="linear(to-r,#08203e,#292E49)">
+    <Container maxW="100vw" h="100vh" bgGradient="linear(to-r,#08203e,#292E49)">
       <Container
         maxW="100vw"
         h="100vh"
@@ -105,35 +137,43 @@ function index() {
             GameTracker
           </Heading>
         </Flex>
-        <Button colorScheme="blue">Get Start</Button>
-      </Container>
-      <Container maxW="95%" h="60vh" bg="white" centerContent>
-        <Heading as="h2" size="xl" p={6}>
-          Enter Your ID
-        </Heading>
+        <Button colorScheme="blue" onClick={onOpen}>
+          Create
+        </Button>
+        <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
+            <DrawerBody>
+              <Container maxW="95%" h="60vh" bg="white" centerContent>
+                <Heading as="h2" size="xl" p={6}>
+                  Enter Your ID
+                </Heading>
 
-        <Flex w="60%" alignItems="center" justifyContent="space-around">
-          <FormControl w="60%" isInvalid={isError}>
-            <FormLabel>ID</FormLabel>
-            <Input
-              placeholder="Please Enter Your ID here"
-              type="word"
-              value={input}
-              onChange={handleInputChange}
-            />
-            {!isError ? (
-              <FormHelperText>
-                Enter the your ID to track.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>ID is required.</FormErrorMessage>
-            )}
-          </FormControl>
+                <Flex w="60%" alignItems="center" justifyContent="space-around">
+                  <FormControl w="60%" isInvalid={isError}>
+                    <FormLabel>ID</FormLabel>
+                    <Input
+                      placeholder="Please Enter Your ID here"
+                      type="word"
+                      value={input}
+                      onChange={handleInputChange}
+                    />
+                    {!isError ? (
+                      <FormHelperText>
+                        Enter the your ID to track.
+                      </FormHelperText>
+                    ) : (
+                      <FormErrorMessage>ID is required.</FormErrorMessage>
+                    )}
+                  </FormControl>
 
-          <Button colorScheme="blue">Save</Button>
-        </Flex>
+                  <Button colorScheme="blue" onClick={idSetting}>
+                    Select ID
+                  </Button>
+                </Flex>
 
-        {/* <HStack {...group} p={10}>
+                {/* <HStack {...group} p={10}>
           {options.map((value) => {
             const radio = getRadioProps({ value });
             return (
@@ -143,29 +183,33 @@ function index() {
             );
           })}
         </HStack> */}
-        <Center p={5}>
-          <Stack {...getRootProps()} w="50vw">
-            <Text align="center" w="100%">
-              The selected sport is: {value}
-            </Text>
-            <HStack justifyContent="center">
-              {avatars.map((avatar) => {
-                return (
-                  <CustomRadio
-                    key={avatar.name}
-                    image={avatar.image}
-                    {...getRadioProps({ value: avatar.name })}
-                  />
-                );
-              })}
-            </HStack>
-          </Stack>
-        </Center>
+                <Center p={5}>
+                  <Stack {...getRootProps()} w="50vw">
+                    <Text align="center" w="100%">
+                      The selected sport is: {value}
+                    </Text>
+                    <HStack justifyContent="center">
+                      {avatars.map((avatar) => {
+                        return (
+                          <CustomRadio
+                            key={avatar.name}
+                            image={avatar.image}
+                            {...getRadioProps({ value: avatar.name })}
+                          />
+                        );
+                      })}
+                    </HStack>
+                  </Stack>
+                </Center>
 
-        <Flex w="20%" justifyContent="space-around" p={2}>
-          <Button colorScheme="blue">Track</Button>
-          {/* <Button colorScheme="blue">Join</Button> */}
-        </Flex>
+                <Flex w="20%" justifyContent="space-around" p={2}>
+                  <Button colorScheme="blue">Track</Button>
+                  {/* <Button colorScheme="blue">Join</Button> */}
+                </Flex>
+              </Container>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </Container>
     </Container>
   );

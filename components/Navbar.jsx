@@ -13,7 +13,14 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-  Center
+  Center,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -22,6 +29,7 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import Link from "next/link";
+import modalButton from "@/pages/modalButton";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -85,8 +93,9 @@ export default function WithSubnavigation() {
               bg: "#ec4156",
             }}
           >
-            Join
+            Track
           </Button>
+          {/* <modalButton>Track</modalButton> */}
         </Stack>
       </Flex>
 
@@ -95,6 +104,32 @@ export default function WithSubnavigation() {
       </Collapse>
     </Box>
   );
+}
+const ModalTrackButton = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  return (
+    <div>
+      <Button onClick={onOpen}>Open Modal</Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Lorem count={2} />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </div>
+  )
 }
 
 const DesktopNav = () => {
