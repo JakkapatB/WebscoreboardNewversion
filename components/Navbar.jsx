@@ -47,13 +47,13 @@ import Link from "next/link";
 import modalButton from "@/pages/modalButton";
 
 export default function WithSubnavigation() {
-  const toast = useToast()
+  const toast = useToast();
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
     if (typeof window !== "undefined") {
       // Perform localStorage action
       const saved = localStorage.getItem("id");
-      const initialValue = (saved);
+      const initialValue = saved;
       return initialValue || "";
     }
   });
@@ -101,13 +101,18 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex
-          flex={{ base: 1 }}
           justify={{ base: "center", md: "start" }}
           marginLeft={5}
         >
           <Link href="/">
-           <Image src="GameTrackers.svg" alt="logo"/>
+            <Image src="GameTrackers.svg" alt="logo" />
           </Link>
+        </Flex>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          marginLeft={5}
+        >
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -137,12 +142,16 @@ export default function WithSubnavigation() {
             </PopoverTrigger>
             <PopoverContent w="40vw">
               <PopoverHeader fontWeight="semibold" color="black">
-              Enter the your ID to track.
+                Enter the your ID to track.
               </PopoverHeader>
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverBody color="black">
-              <Flex w="100%" alignItems="center" justifyContent="space-around">
+                <Flex
+                  w="100%"
+                  alignItems="center"
+                  justifyContent="space-around"
+                >
                   <FormControl w="60%" isInvalid={isError}>
                     <FormLabel>ID</FormLabel>
                     <Input
@@ -176,7 +185,9 @@ export default function WithSubnavigation() {
                     Select ID
                   </Button>
                 </Flex>
-                <Center><Button colorScheme='blue'>View</Button></Center>
+                <Center>
+                  <Button colorScheme="blue">View</Button>
+                </Center>
               </PopoverBody>
             </PopoverContent>
           </Popover>
