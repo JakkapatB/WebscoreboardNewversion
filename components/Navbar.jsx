@@ -35,6 +35,7 @@ import {
   isError,
   Input,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -108,19 +109,18 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex
-          flex={{ base: 1 }}
           justify={{ base: "center", md: "start" }}
           marginLeft={5}
         >
           <Link href="/">
-            <Text
-              textAlign={useBreakpointValue({ base: "center", md: "left" })}
-              fontFamily={"heading"}
-              color={useColorModeValue("#fcfcfc", "white")}
-            >
-              Logooooooo
-            </Text>
+            <Image src="GameTrackers.svg" alt="logo" />
           </Link>
+        </Flex>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          marginLeft={5}
+        >
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>

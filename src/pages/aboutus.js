@@ -26,6 +26,9 @@ import {
 import { useState } from "react";
 import Footer from "components/Footer";
 import { BsGithub, BsFacebook } from "react-icons/bs";
+import { useRouter } from "next/router";
+import { animateScroll } from 'react-scroll';
+import { handleSmoothScroll } from "next/dist/shared/lib/router/router";
 // import modalButton from "components/modalButton";
 
 export default function About_us() {
@@ -90,7 +93,10 @@ export default function About_us() {
                 colorScheme={"red"}
                 bg={"red.400"}
                 _hover={{ bg: "red.500" }}
-                onClick={() => window.scrollTo(0, 720)}
+                onClick={() =>window.scrollTo({
+                  top: 720,
+                  behavior: 'smooth'
+                })}
               >
                 Contact us
               </Button>
