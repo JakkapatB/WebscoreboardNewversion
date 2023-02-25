@@ -133,19 +133,19 @@ function index() {
   const avatars = [
     {
       name: "Volleyball",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
+      image: "112.png",
     },
     {
       name: "Badminton",
-      image: "https://randomuser.me/api/portraits/men/86.jpg",
+      image: "113.png",
     },
     {
       name: "Sepak takraw",
-      image: "https://randomuser.me/api/portraits/men/29.jpg",
+      image: "111.png",
     },
     {
       name: "Table tennis",
-      image: "https://randomuser.me/api/portraits/women/95.jpg",
+      image: "114.png",
     },
   ];
 
