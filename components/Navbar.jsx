@@ -227,7 +227,7 @@ export default function WithSubnavigation() {
                         <>
                           <PopoverTrigger>
                             <Button>
-                              Click to {isOpen ? "close" : "open"}
+                              QR-CODE {isOpen ? "" : ""}
                             </Button>
                           </PopoverTrigger>
                           <Portal>
