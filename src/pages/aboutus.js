@@ -26,9 +26,9 @@ import {
 import { useState } from "react";
 import Footer from "components/Footer";
 import { BsGithub, BsFacebook } from "react-icons/bs";
+// import modalButton from "components/modalButton";
 
-export default function CallToActionWithVideo() {
-  const [liked, setLiked] = useState(false);
+export default function About_us() {
   return (
     <Container
       maxW="100vw"

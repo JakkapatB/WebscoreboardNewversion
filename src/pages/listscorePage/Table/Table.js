@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState } from "react";
 import { Center, Square, Circle, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
 import {
@@ -34,21 +34,32 @@ import {
 } from "@chakra-ui/icons";
 
 // import Data from "../Dataset/Data.json";
-import Data from "../Dataset/Data.json";
 import { useTable, useSortBy, usePagination } from "react-table";
 import { COLUMNS } from "./Columns";
+import { listAll } from "src/pages/md";
+
 const DataTable = () => {
   //   let columns = Object.keys(Data[0]);  //columns list before using react table.
 
   // we momoized the columns and data so that our table don't get render again and again.
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => Data, []);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const data = await listAll();
+    console.log(data.docs);
+    setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+  
+
   const tableInstance = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 10 } 
+      initialState: { pageSize: 10 },
     },
     useSortBy,
     usePagination
@@ -59,7 +70,7 @@ const DataTable = () => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    rows,
+    row,
     page,
     nextPage,
     previousPage,
@@ -68,39 +79,39 @@ const DataTable = () => {
     pageOptions,
     gotoPage,
     pageCount,
-    state ,
+    state,
     setSortBy,
     allColumns,
   } = tableInstance;
 
-  const { pageSize , pageIndex } = state;
+  const { pageSize, pageIndex } = state;
 
   const [selectedSortColumn, setSelectedSortColumn] = useState({
     id: "",
     desc: false,
   });
 
-  function handleSort(e) {
-    let temp = Object.assign({}, selectedSortColumn);
-    temp["id"] = e;
-    setSelectedSortColumn(temp);
-    setSortBy([temp]);
-  }
+  // function handleSort(e) {
+  //   let temp = Object.assign({}, selectedSortColumn);
+  //   temp["id"] = e;
+  //   setSelectedSortColumn(temp);
+  //   setSortBy([temp]);
+  // }
 
-  const typeOfSort = (e) => {
-    let tempColumn;
-    if (e == "0") {
-      tempColumn = Object.assign({}, selectedSortColumn);
-      tempColumn["desc"] = false;
-      setSelectedSortColumn(tempColumn);
-      setSortBy([tempColumn]);
-    } else {
-      tempColumn = Object.assign({}, selectedSortColumn);
-      tempColumn["desc"] = true;
-      setSelectedSortColumn(tempColumn);
-      setSortBy([tempColumn]);
-    }
-  };
+  // const typeOfSort = (e) => {
+  //   let tempColumn;
+  //   if (e == "0") {
+  //     tempColumn = Object.assign({}, selectedSortColumn);
+  //     tempColumn["desc"] = false;
+  //     setSelectedSortColumn(tempColumn);
+  //     setSortBy([tempColumn]);
+  //   } else {
+  //     tempColumn = Object.assign({}, selectedSortColumn);
+  //     tempColumn["desc"] = true;
+  //     setSelectedSortColumn(tempColumn);
+  //     setSortBy([tempColumn]);
+  //   }
+  // };
 
   console.log({ cols: allColumns });
   return (
@@ -109,7 +120,7 @@ const DataTable = () => {
       maxH={"auto"}
       bgGradient="linear(to-tl,#08203e,#08203e)"
     >
-      <Container maxW="7xl" maxH="auto"  >
+      <Container maxW="7xl" maxH="auto">
         {/* <Text p='1em' fontSize='2lpx' textAlign='center' ></Text> */}
         <Box>
           <Center>
@@ -144,8 +155,8 @@ const DataTable = () => {
         </Box>
 
         <Text p="1em" fontSize="2lpx" textAlign="center"></Text>
-        <Box maxH="auto" overflowY="auto" mt={5} mb ={8} >
-          <Table
+        <Box maxH="auto" overflowY="auto" mt={5} mb={8}>
+        <Table
             {...getTableProps()}
             size="md"
             variant="striped"
@@ -191,8 +202,9 @@ const DataTable = () => {
             </Thead>
 
             <Tbody className="body1" p="1em" {...getTableBodyProps()}>
-              {page && page.length > 0 ? (
+            {page && page.length > 0 ? (
                 page.map((row) => {
+                  console.log(row);
                   prepareRow(row);
                   return (
                     <Tr className="tr1" {...row.getRowProps()}>
@@ -219,6 +231,8 @@ const DataTable = () => {
               )}
             </Tbody>
           </Table>
+
+          
           {/* go to page button */}
         </Box>
         <Flex

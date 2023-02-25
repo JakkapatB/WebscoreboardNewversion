@@ -4,29 +4,29 @@ export var COLUMNS = [
     accessor: "id",
   },
   {
-    Header: "ชื่อทีม",
-    accessor: "first_name",
+    Header: "คะแนนทีมเหย้า",
+    accessor: "score-a",
   },
   {
-    Header: "ชื่อทีม",
-    accessor: "last_name",
+    Header: "เซ็ททีมเหย้า",
+    accessor: "set-a",
+  },
+  {
+    Header: "คะแนนทีมเยือน",
+    accessor: "score-b",
+  },
+  {
+    Header: "เซ็ททีมเยือน",
+    accessor: "set-b",
   },
   {
     Header: "ประเภทกีฬา",
-    accessor: "email",
+    accessor: "type",
   },
   {
-    Header: "ผลการเเข่งขัน",
-    accessor: "gender",
+    Header: "ผลการแข่งขัน",
+    accessor: "countries",
   },
-  // {
-  //   Header: "City",
-  //   accessor: "city",
-  // },
-  // {
-  //   Header: "Countries",
-  //   accessor: "countries",
-  // },
   // {
   //   Header: "Credit Card",
   //   accessor: "credit_card",
