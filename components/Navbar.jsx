@@ -13,7 +13,8 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-  Center
+  Center,
+  Image,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -53,7 +54,11 @@ export default function WithSubnavigation() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }} marginLeft={5}>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          marginLeft={5}
+        >
           <Link href="/">
             <Text
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -63,7 +68,7 @@ export default function WithSubnavigation() {
               Logooooooo
             </Text>
           </Link>
-          <Flex display={{ base: "none", md: "flex" }} ml={10}> 
+          <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
