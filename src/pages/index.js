@@ -176,8 +176,8 @@ function index() {
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
             <DrawerBody>
-              <Container maxW="95%" h="60vh" bg="white" centerContent>
-                <Heading as="h2" size="xl" p={6}>
+              <Container maxW="95%" h="50vh" bg="white" centerContent>
+                {/* <Heading as="h2" size="xl" p={6}>
                   Enter Your ID
                 </Heading>
 
@@ -214,7 +214,7 @@ function index() {
                   >
                     Select ID
                   </Button>
-                </Flex>
+                </Flex> */}
                 <br />
                 <Flex alignItems={"center"}>
                   <FormControl isRequired>

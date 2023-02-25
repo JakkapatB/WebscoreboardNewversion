@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -10,6 +11,12 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
@@ -21,6 +28,13 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  isError,
+  Input,
+  useToast,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -32,7 +46,31 @@ import Link from "next/link";
 import modalButton from "@/pages/modalButton";
 
 export default function WithSubnavigation() {
+  const toast = useToast()
+  const [id, setID] = useState(() => {
+    // const saved = localStorage.getItem("id");
+    if (typeof window !== "undefined") {
+      // Perform localStorage action
+      const saved = localStorage.getItem("id");
+      const initialValue = (saved);
+      return initialValue || "";
+    }
+  });
   const { isOpen, onToggle } = useDisclosure();
+  const [input, setInput] = useState("");
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    // setIDinput(e.target.value)
+  };
+  const isError = input === "";
+  const idSetting = () => {
+    setID(input);
+    console.log(input);
+  };
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("id", id);
+  }, [id]);
 
   return (
     <Box>
@@ -61,7 +99,11 @@ export default function WithSubnavigation() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }} marginLeft={5}>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          marginLeft={5}
+        >
           <Link href="/">
             <Text
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -71,7 +113,7 @@ export default function WithSubnavigation() {
               Logooooooo
             </Text>
           </Link>
-          <Flex display={{ base: "none", md: "flex" }} ml={10}> 
+          <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -82,19 +124,67 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"#FF6573"}
-            href={"#"}
-            _hover={{
-              bg: "#ec4156",
-            }}
-          >
-            Track
-          </Button>
+          <Popover placement="bottom-end">
+            <PopoverTrigger>
+              <Button
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"#FF6573"}
+                href={"#"}
+                _hover={{
+                  bg: "#ec4156",
+                }}
+              >
+                Track
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent w="40vw">
+              <PopoverHeader fontWeight="semibold" color="black">
+              Enter the your ID to track.
+              </PopoverHeader>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverBody color="black">
+              <Flex w="100%" alignItems="center" justifyContent="space-around">
+                  <FormControl w="60%" isInvalid={isError}>
+                    <FormLabel>ID</FormLabel>
+                    <Input
+                      placeholder="Please Enter Your ID here"
+                      type="word"
+                      value={input}
+                      onChange={handleInputChange}
+                    />
+                    {!isError ? (
+                      <FormHelperText>
+                        Enter the your ID to track.
+                      </FormHelperText>
+                    ) : (
+                      <FormErrorMessage>ID is required.</FormErrorMessage>
+                    )}
+                  </FormControl>
+
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      idSetting();
+                      toast({
+                        title: "ID saved.",
+                        description: "We've save your ID.",
+                        status: "success",
+                        duration: 4500,
+                        isClosable: true,
+                      });
+                    }}
+                  >
+                    Select ID
+                  </Button>
+                </Flex>
+                <Center><Button colorScheme='blue'>View</Button></Center>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
           {/* <modalButton>Track</modalButton> */}
         </Stack>
       </Flex>
@@ -106,7 +196,7 @@ export default function WithSubnavigation() {
   );
 }
 const ModalTrackButton = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div>
       <Button onClick={onOpen}>Open Modal</Button>
@@ -121,16 +211,16 @@ const ModalTrackButton = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
