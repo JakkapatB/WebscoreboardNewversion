@@ -28,6 +28,21 @@ import {
   faPlay,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { getDataByID, updateData} from "../md";
+import { db} from "../md";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  addDoc,
+  onSnapshot,
+  updateDoc,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
+
 const teamA = new ScorePlayer1("Team A");
 const teamB = new ScorePlayer2("Team B");
 
@@ -55,7 +70,7 @@ function scoreboardIDpage() {
     setTeamBName(event.target.value);
     // console.log(teamBName)
   };
-  GameScore.selectSportAndSetPointToWin("Table tennis"); //เปลี่ยนกีฬาตรงนี้
+ 
 
   const timeToString =
     ("0" + Math.floor((time / 60000) % 60)).slice(-2) +
@@ -76,6 +91,14 @@ function scoreboardIDpage() {
     return () => clearInterval(interval);
   }, [running]);
 
+  const [yourID, setYourID] = useState();
+  useEffect(() => {
+    const yourID = (localStorage.getItem("id"));
+    if (yourID) {
+      setYourID(yourID);
+    }
+  }, []);
+
   function reState(x) {
     if (x) {
       let scoreA = x[0],
@@ -88,29 +111,47 @@ function scoreboardIDpage() {
       set_set_b(setB);
     }
     // console.log(x);
+    updateData(yourID, teamA.getScore(), teamB.getScore(), teamA.getWinSet(), teamB.getWinSet(), getSport, false)
   }
+  
+
+  const [getSport, setGetsport] = useState();
+  useEffect(() => {
+    const getSport = (localStorage.getItem("sport"));
+    if (getSport) {
+      setGetsport(getSport);
+    }
+  }, []);
+  GameScore.selectSportAndSetPointToWin(getSport); //เปลี่ยนกีฬาตรงนี้
 
   function addScoreA() {
     reState(addScoreTeamA());
+    updateData(yourID, teamA.getScore(), teamB.getScore(), teamA.getWinSet(), teamB.getWinSet(), getSport, false)
+    console.log(yourID);
+    console.log(typeof yourID);
     // console.log(isWinner)
   }
 
   function addScoreB() {
     reState(addScoreTeamB());
+    updateData(yourID, teamA.getScore(), teamB.getScore(), teamA.getWinSet(), teamB.getWinSet(), getSport, false)
   }
 
   function subtractScoreA() {
     reState(subtractScoreTeamA());
+    updateData(yourID, teamA.getScore(), teamB.getScore(), teamA.getWinSet(), teamB.getWinSet(), getSport, false)
   }
 
   function subtractScoreB() {
     reState(subtractScoreTeamB());
+    updateData(yourID, teamA.getScore(), teamB.getScore(), teamA.getWinSet(), teamB.getWinSet(), getSport, false)
   }
 
   function resetScoreAndSetButton() {
     resetScoreAndSet();
     reState([0, 0, 0, 0]);
     setTime(0);
+    
     // setIsReset(true);
 
     // console.log(score_a, score_b , set_a, set_b)
@@ -240,6 +281,45 @@ function scoreboardIDpage() {
     console.log(isWinner);
   });
 
+  
+
+  useEffect(()=>{
+    function updateScreen () {
+      // let y = localStorage.getItem("id")
+      console.log(88);
+      let y = localStorage.getItem('id')
+      let fecthData = async () => { 
+        const x = await getDataByID(y)
+        // console.log(data);
+      console.log(x);
+      
+
+      teamA.setTeamName(x["name-a"])
+      teamA.setScore(x["score-a"])
+      console.log(teamA.getScore());
+      teamA.setWinSet(x["set-a"])
+      
+      teamB.setTeamName(x["name-b"])
+      teamB.setScore(x["score-b"])
+      teamB.setWinSet(x["set-b"])
+      
+      setTeamAName(teamA.getTeamName())
+      setTeamBName(teamB.getTeamName())
+      set_score_a(teamA.getScore())
+      set_score_b(teamB.getScore())
+      set_set_a(teamA.getWinSet())
+      set_set_b(teamB.getWinSet())
+      }
+      // const x = fecthData().catch(console.error);
+      fecthData();
+      console.log(5);
+      
+    }
+    updateScreen();
+  },[])
+
+  
+
   return (
     // Container of Scoreboard
     <Container maxW="100vw" h="100vh" bg="#061435" centerContent pos="relative">
@@ -316,10 +396,10 @@ function scoreboardIDpage() {
             mr={1}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Prayuth Chan
-              </Text> */}
-              <Editable
+            <Text color="black" fontSize="2xl" userSelect="none">
+                {teamAName}
+              </Text>
+              {/* <Editable
                 color="black"
                 fontSize="2xl"
                 defaultValue={teamAName}
@@ -327,7 +407,7 @@ function scoreboardIDpage() {
               >
                 <EditablePreview />
                 <EditableInput onChange={onChange_A_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
@@ -351,13 +431,13 @@ function scoreboardIDpage() {
             mr={2}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Pravit Wong
-              </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
+            <Text color="black" fontSize="2xl" userSelect="none">
+                {teamBName}
+              </Text>
+              {/* <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
                 <EditablePreview />
                 <EditableInput onChange={onChange_B_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 

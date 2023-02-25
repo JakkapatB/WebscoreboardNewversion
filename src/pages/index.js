@@ -1,7 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
+import { useRouter } from 'next/router'
 import { Container } from "@chakra-ui/react";
 import { Heading, Flex, Button, Box } from "@chakra-ui/react";
+import { addNew } from "./md.js";
 import {
   Input,
   useRadioGroup,
@@ -21,6 +23,8 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  isError,
+  Link,
 } from "@chakra-ui/react";
 import RadioCard from "./RadioCard";
 import {
@@ -31,40 +35,77 @@ import {
 } from "@chakra-ui/react";
 
 function index() {
+  let router= useRouter()
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Perform localStorage action
-      const saved = localStorage.getItem('id')
-      const initialValue = JSON.parse(saved);
+      const saved = localStorage.getItem("id");
+      const initialValue = (saved);
       return initialValue || "";
     }
   });
-  
-  // const [IDinput, setIDinput] = useState("");
-  const [input, setInput] = useState("");
 
+  const [sport, setSport] = useState(() => {
+    // const saved = localStorage.getItem("id");
+    if (typeof window !== "undefined") {
+      // Perform localStorage action
+      const saved = localStorage.getItem("sport");
+      const initialValue = (saved);
+      return initialValue || "";
+    }
+  });
+  const [yourID, setYourID] = useState([]);
+  useEffect(() => {
+    const yourID = (localStorage.getItem("id"));
+    if (yourID) {
+      setYourID(yourID);
+    }
+  }, []);
+
+  // const [IDinput, setIDinput] = useState("");
+  const [teamAname, setTeamAName] = useState("");
+  const [teamBname, setTeamBName] = useState("");
+  const [typesport, setTypeSport] = useState("");
+  const [viewCanClick, setViewCanClick] = useState(false);
+  useEffect(()=>{
+    if(teamAname === "" || teamBname === "" || typesport === "") {
+      setViewCanClick(false)
+    }
+  },[])
+
+  const [input, setInput] = useState("");
   const handleInputChange = (e) => {
     setInput(e.target.value);
     // setIDinput(e.target.value)
   };
-  const isError = input === "";
-  // const options = ["Volleyball", "Badminton", "Sepak takraw","Table tennis"];
-  // const { getRootProps, getRadioProps } = useRadioGroup({
-  //   name: "sport",
-  //   defaultValue: "Volleyball",
-  //   onChange: console.log,
-  // });
+  const handleNameOfTeamAChange = (e) => {
+    setTeamAName(e.target.value);
+  };
+  const handleNameOfTeamBChange = (e) => {
+    setTeamBName(e.target.value);
+  };
 
-  // const group = getRootProps();
+  const isError = input === "";
+
   const idSetting = () => {
     setID(input);
     console.log(input);
   };
+
+  const sportSetting = () => {
+    setSport(value)
+    setTypeSport(value);
+  }
   useEffect(() => {
     // storing input name
-    localStorage.setItem("id", JSON.stringify(id));
+    localStorage.setItem("id", id);
   }, [id]);
+
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("sport", sport);
+  }, [sport]);
 
   function CustomRadio(props) {
     const { image, ...radioProps } = props;
@@ -145,8 +186,8 @@ function index() {
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
             <DrawerBody>
-              <Container maxW="95%" h="60vh" bg="white" centerContent>
-                <Heading as="h2" size="xl" p={6}>
+              <Container maxW="95%" h="50vh" bg="white" centerContent>
+                {/* <Heading as="h2" size="xl" p={6}>
                   Enter Your ID
                 </Heading>
 
@@ -168,10 +209,48 @@ function index() {
                     )}
                   </FormControl>
 
-                  <Button colorScheme="blue" onClick={idSetting}>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      idSetting();
+                      toast({
+                        title: "ID saved.",
+                        description: "We've save your ID.",
+                        status: "success",
+                        duration: 4500,
+                        isClosable: true,
+                      });
+                    }}
+                  >
                     Select ID
                   </Button>
+                </Flex> */}
+                <br />
+                <Flex alignItems={"center"}>
+                  <FormControl isRequired>
+                    <FormLabel>First team's name</FormLabel>
+                    <Input
+                      placeholder="First team's name"
+                      type="word"
+                      value={teamAname}
+                      onChange={handleNameOfTeamAChange}
+                    />
+                  </FormControl>
+                  <Heading pl={10} pr={10}>
+                    VS
+                  </Heading>
+                  <FormControl isRequired>
+                    <FormLabel>Second team's name</FormLabel>
+                    <Input
+                      placeholder="Second team's name"
+                      type="word"
+                      value={teamBname}
+                      onChange={handleNameOfTeamBChange}
+                    />
+                  </FormControl>
                 </Flex>
+
+                <br />
 
                 {/* <HStack {...group} p={10}>
           {options.map((value) => {
@@ -202,10 +281,70 @@ function index() {
                   </Stack>
                 </Center>
 
-                <Flex w="20%" justifyContent="space-around" p={2}>
-                  <Button colorScheme="blue">Track</Button>
+                <Flex w="30%" justifyContent="space-around" p={2}>
+                  {/* <Button
+                  w={"40%"}
+                    colorScheme="blue"
+                    onClick={() =>
+                      toast({
+                        title: "Name set",
+                        description: "We've set team name for you.",
+                        status: "success",
+                        duration: 4500,
+                        isClosable: true,
+                      })
+                    }
+                  >
+                    Set name
+                  </Button> */}
+
+                  {/* <Button colorScheme="blue">Join</Button> */}
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      toast({
+                        title: "Tracker created.",
+                        description: "We've created your sport tracker for you.",
+                        status: "success",
+                        duration: 4500,
+                        isClosable: true,
+                      });
+                      sportSetting();
+                      setViewCanClick(true)
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                  isDisabled={!viewCanClick}
+                    colorScheme="blue"
+                    onClick={() => {
+                      toast({
+                        title: "Tracker created.",
+                        description: "We've created your sport tracker for you.",
+                        status: "success",
+                        duration: 4500,
+                        isClosable: true,
+                      });
+                      const returnedID = async() => {
+                        let x = await addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname)
+                        console.log("return ID : " + x);
+                        localStorage.setItem("id", x);
+                        router.push('/scoreboardForFB/'+"id")
+                      }
+                      // addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
+                      returnedID();
+                      console.log("addNew")
+                      sportSetting();
+
+                    }}
+                  >
+                    Go Track
+                  </Button>
+
                   {/* <Button colorScheme="blue">Join</Button> */}
                 </Flex>
+                <br />
               </Container>
             </DrawerBody>
           </DrawerContent>

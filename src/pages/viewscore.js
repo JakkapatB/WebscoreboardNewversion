@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "./md.js";
+import { db, getDataByID, updateData } from "./md.js";
 import {
   collection,
   getDocs,
@@ -259,32 +259,46 @@ function scoreboard() {
 //       document.getElementById("score-b").innerHTML = doc.data()["score-b"];
 //     });
 //   }
+// useEffect(()=>{
+//   function updateScreen () {
+//     // let y = localStorage.getItem("id")
+//     console.log(88);
+//     let y = 
+//     let fecthData = async () => { 
+//       const x = await getDataByID(y)
+//       // console.log(data);
+//     console.log(x);
+    
+
+//     teamA.setTeamName(x["name-a"])
+//     teamA.setScore(x["score-a"])
+//     console.log(teamA.getScore());
+//     teamA.setWinSet(x["set-a"])
+    
+//     teamB.setTeamName(x["name-b"])
+//     teamB.setScore(x["score-b"])
+//     teamB.setWinSet(x["set-b"])
+
+//     set_score_a(teamA.getScore())
+//     set_score_b(teamB.getScore())
+//     set_set_a(teamA.getWinSet())
+//     set_set_b(teamB.getWinSet())
+//     }
+//     // const x = fecthData().catch(console.error);
+//     fecthData();
+//     console.log(5);
+    
+//   }
+//   updateScreen();
+// },[])
 
   useEffect(()=>{
-    // let yourID = localStorage.getItem("yourID");
-    // const q = query(collection(db, "record"))
-    const yourID = '1co1m8pjQMzgugQsToK4'
+    const yourID = localStorage.getItem('id')
     let q = doc(db, "record", yourID)
-    // let q = query(collection(db, "record"), where("id", "==", yourID));
     onSnapshot(q, (docs) => {
         let scoreArr = []
         console.log("ok558");
-    //   console.log("Current data: ", doc.data());
-
-        // docs.forEach(doc => {
-        //     let x = doc.data()
-        //     console.log('aa' + x);
-        //     scoreArr.push(x["score-a"])
-        //     scoreArr.push(x["score-b"])
-        //     scoreArr.push(x["set-a"])
-        //     scoreArr.push(x["set-b"])
-            
-        // });
-        //   let x = doc.data();
-        //   console.log(x["scora-1"]);
-    //   document.getElementById("score-a").innerHTML = doc.data()["score-a"];
-    //   document.getElementById("score-b").innerHTML = doc.data()["score-b"];
-    // set_score_a()
+ 
     let x= docs.data()
     scoreArr.push(x["score-a"])
     scoreArr.push(x["score-b"])
@@ -294,7 +308,20 @@ function scoreboard() {
     // console.log('x=' + x["name-a"])
     reState(scoreArr);
     });
+    let fecthData = async () => { 
+      const x = await getDataByID(yourID)
+      // console.log(data);
+    // console.log(x);
+    teamA.setTeamName(x["name-a"])
+    teamB.setTeamName(x["name-b"])
+
+    
+    setTeamAName(teamA.getTeamName())
+    setTeamBName(teamB.getTeamName())
+    }
+    fecthData();
   },[])
+  
 
   return (
     // Container of Scoreboard
@@ -372,10 +399,10 @@ function scoreboard() {
             mr={1}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Prayuth Chan
-              </Text> */}
-              <Editable
+              <Text color="black" fontSize="2xl" userSelect="none">
+                {teamAName}
+              </Text>
+              {/* <Editable
                 color="black"
                 fontSize="2xl"
                 defaultValue={teamAName}
@@ -383,7 +410,7 @@ function scoreboard() {
               >
                 <EditablePreview />
                 <EditableInput onChange={onChange_A_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
@@ -407,13 +434,13 @@ function scoreboard() {
             mr={2}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Pravit Wong
-              </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
+              <Text color="black" fontSize="2xl" userSelect="none">
+                {teamBName}
+              </Text>
+              {/* <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
                 <EditablePreview />
                 <EditableInput onChange={onChange_B_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
@@ -513,7 +540,7 @@ function scoreboard() {
             {/* <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span> */}
             {/* <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span> */}
             {/* <span>{("0" + ((time / 10) % 100)).slice(-2)}</span> */}
-            {timeToString}
+            Viewer
           </Text>
         </Center>
       </Box>

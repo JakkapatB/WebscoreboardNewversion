@@ -237,6 +237,8 @@ function scoreboard() {
     console.log(isWinner)
   })
 
+  
+
 
   return (
     // Container of Scoreboard
