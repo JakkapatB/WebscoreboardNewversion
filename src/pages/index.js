@@ -330,7 +330,7 @@ function index() {
                         let x = await addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname)
                         console.log("return ID : " + x);
                         localStorage.setItem("id", x);
-                        router.push('/scoreboardForFB/'+"id")
+                        router.push('/scoreboardForFB/scoreboardID')
                       }
                       // addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
                       returnedID();

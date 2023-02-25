@@ -199,7 +199,7 @@ export default function WithSubnavigation() {
                 <Center>
                   <Flex w="40%" justifyContent="space-around">
                       <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
-                        router.push('/scoreboardForFB/'+"id")
+                        router.push('/scoreboardForFB/scoreboardID')
                       }}>
                         Track
                       </Button>
@@ -409,14 +409,14 @@ const MobileNavItem = ({ label, children, href }) => {
 const NAV_ITEMS = [
   {
     label: "Scoreboard",
-    href: "scoreboard",
+    href: "/scoreboard",
   },
   {
     label: "List Score",
-    href: "listscore",
+    href: "/listscore",
   },
   {
     label: "About us",
-    href: "aboutus",
+    href: "/aboutus",
   },
 ];
