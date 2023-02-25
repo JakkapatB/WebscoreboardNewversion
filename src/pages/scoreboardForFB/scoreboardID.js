@@ -239,38 +239,38 @@ function scoreboardIDpage() {
   }
 
   // Press key from keyboard to Add, Sub , Reset score.
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
+  // useEffect(() => {
+  //   const keyDownHandler = (event) => {
+  //     console.log("User pressed: ", event.key);
 
-      if (event.key === ";") {
-        event.preventDefault();
-        addScoreA();
-      }
-      if (event.key === "'") {
-        event.preventDefault();
-        addScoreB();
-      }
-      if (event.key === ".") {
-        event.preventDefault();
-        subtractScoreA();
-      }
-      if (event.key === "/") {
-        event.preventDefault();
-        subtractScoreB();
-      }
-      if (event.key === "]") {
-        event.preventDefault();
-        resetScoreAndSetButton();
-      }
-    };
+  //     if (event.key === ";") {
+  //       event.preventDefault();
+  //       addScoreA();
+  //     }
+  //     if (event.key === "'") {
+  //       event.preventDefault();
+  //       addScoreB();
+  //     }
+  //     if (event.key === ".") {
+  //       event.preventDefault();
+  //       subtractScoreA();
+  //     }
+  //     if (event.key === "/") {
+  //       event.preventDefault();
+  //       subtractScoreB();
+  //     }
+  //     if (event.key === "]") {
+  //       event.preventDefault();
+  //       resetScoreAndSetButton();
+  //     }
+  //   };
 
-    document.addEventListener("keydown", keyDownHandler);
+  //   document.addEventListener("keydown", keyDownHandler);
 
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
 
   const setWinnerToFalse = () => {
     setIsWinner(false);
