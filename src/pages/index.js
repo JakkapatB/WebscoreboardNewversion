@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
+import { useRouter } from 'next/router'
 import { Container } from "@chakra-ui/react";
 import { Heading, Flex, Button, Box } from "@chakra-ui/react";
 import { addNew } from "./md.js";
@@ -34,6 +35,7 @@ import {
 } from "@chakra-ui/react";
 
 function index() {
+  let router= useRouter()
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
     if (typeof window !== "undefined") {
@@ -324,8 +326,17 @@ function index() {
                         duration: 4500,
                         isClosable: true,
                       });
-                      addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
+                      const returnedID = async() => {
+                        let x = await addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname)
+                        console.log("return ID : " + x);
+                        localStorage.setItem("id", x);
+                        router.push('/scoreboardForFB/'+"id")
+                      }
+                      // addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
+                      returnedID();
+                      console.log("addNew")
                       sportSetting();
+
                     }}
                   >
                     Go Track

@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "./md.js";
+import { db, getDataByID, updateData } from "./md.js";
 import {
   collection,
   getDocs,
@@ -308,6 +308,18 @@ function scoreboard() {
     // console.log('x=' + x["name-a"])
     reState(scoreArr);
     });
+    let fecthData = async () => { 
+      const x = await getDataByID(yourID)
+      // console.log(data);
+    // console.log(x);
+    teamA.setTeamName(x["name-a"])
+    teamB.setTeamName(x["name-b"])
+
+    
+    setTeamAName(teamA.getTeamName())
+    setTeamBName(teamB.getTeamName())
+    }
+    fecthData();
   },[])
   
 
@@ -387,10 +399,10 @@ function scoreboard() {
             mr={1}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Prayuth Chan
-              </Text> */}
-              <Editable
+              <Text color="black" fontSize="2xl" userSelect="none">
+                {teamAName}
+              </Text>
+              {/* <Editable
                 color="black"
                 fontSize="2xl"
                 defaultValue={teamAName}
@@ -398,7 +410,7 @@ function scoreboard() {
               >
                 <EditablePreview />
                 <EditableInput onChange={onChange_A_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
@@ -422,13 +434,13 @@ function scoreboard() {
             mr={2}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Pravit Wong
-              </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
+              <Text color="black" fontSize="2xl" userSelect="none">
+                {teamBName}
+              </Text>
+              {/* <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
                 <EditablePreview />
                 <EditableInput onChange={onChange_B_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 

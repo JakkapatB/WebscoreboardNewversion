@@ -302,7 +302,9 @@ function scoreboardIDpage() {
       teamB.setTeamName(x["name-b"])
       teamB.setScore(x["score-b"])
       teamB.setWinSet(x["set-b"])
-
+      
+      setTeamAName(teamA.getTeamName())
+      setTeamBName(teamB.getTeamName())
       set_score_a(teamA.getScore())
       set_score_b(teamB.getScore())
       set_set_a(teamA.getWinSet())
@@ -394,10 +396,10 @@ function scoreboardIDpage() {
             mr={1}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Prayuth Chan
-              </Text> */}
-              <Editable
+            <Text color="black" fontSize="2xl" userSelect="none">
+                {teamAName}
+              </Text>
+              {/* <Editable
                 color="black"
                 fontSize="2xl"
                 defaultValue={teamAName}
@@ -405,7 +407,7 @@ function scoreboardIDpage() {
               >
                 <EditablePreview />
                 <EditableInput onChange={onChange_A_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
@@ -429,13 +431,13 @@ function scoreboardIDpage() {
             mr={2}
           >
             <Center>
-              {/* <Text color="black" fontSize="2xl" userSelect="none">
-                Pravit Wong
-              </Text> */}
-              <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
+            <Text color="black" fontSize="2xl" userSelect="none">
+                {teamBName}
+              </Text>
+              {/* <Editable color="black" fontSize="2xl" defaultValue={teamBName}>
                 <EditablePreview />
                 <EditableInput onChange={onChange_B_NameHandler} />
-              </Editable>
+              </Editable> */}
             </Center>
           </Box>
 
