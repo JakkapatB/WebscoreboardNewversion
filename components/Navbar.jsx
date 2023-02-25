@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router'
+import QRCode from "react-qr-code";
 import {
   Box,
   Flex,
@@ -82,6 +83,11 @@ export default function WithSubnavigation() {
     // storing input name
     localStorage.setItem("id", id);
   }, [id]);
+
+  function handleChange(e) {
+    setInput(e.target.value)
+}
+
 
   return (
     <Box>
@@ -196,7 +202,7 @@ export default function WithSubnavigation() {
                 </Flex>
                 <br />
                 <Center>
-                  <Flex w="40%" justifyContent="space-around">
+                  <Flex w="40%" justifyContent="space-around" marginLeft="5">
                       <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
                         router.push('/scoreboardForFB/scoreboardID')
                       }}>
@@ -208,6 +214,12 @@ export default function WithSubnavigation() {
                       }}> 
                         View
                       </Button>
+                      <Button  colorScheme="blue" onClick={(e)=>{
+                        handleChange(e)
+                      }}> 
+                        Qr-code
+                      </Button>
+                      <QRCode value={input} />
                   </Flex>
                 </Center>
               </PopoverBody>
