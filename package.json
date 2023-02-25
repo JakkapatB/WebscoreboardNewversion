@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -25,12 +26,15 @@
     "eslint-config-next": "13.1.6",
     "firebase": "^9.17.1",
     "framer-motion": "^9.0.1",
-    "next": "^13.1.6",
+    "next": "^13.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-scroll": "^1.8.9",
     "react-stopwatch": "^2.0.4",
     "react-table": "^7.8.0"
+  },
+  "devDependencies": {
+    "ngrok": "^4.3.3"
   }
 }

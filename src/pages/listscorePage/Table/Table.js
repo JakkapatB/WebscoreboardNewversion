@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Center, Square, Circle, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
 import {
@@ -37,7 +37,7 @@ import {
 import { useTable, useSortBy, usePagination } from "react-table";
 import { COLUMNS } from "./Columns";
 import { listAll } from "src/pages/md";
-
+import { doc } from "firebase/firestore";
 const DataTable = () => {
   //   let columns = Object.keys(Data[0]);  //columns list before using react table.
 
@@ -53,13 +53,26 @@ const DataTable = () => {
     console.log(data.docs);
     setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
+  // function DataTable({ data, itemsPerPage }) {
+  //   const [currentPage, setCurrentPage] = useState(1);
   
-
+  //   const handleClick = (e, index) => {
+  //     e.preventDefault();
+  //     setCurrentPage(index);
+  //   };
+  
+  //   const indexOfLastItem = currentPage * itemsPerPage;
+  //   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  //   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  
+  //   const pageNumbers = [];
+  //   for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
+  //     pageNumbers.push(i);
+  //   }}
   const tableInstance = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 10 },
     },
     useSortBy,
     usePagination
@@ -85,6 +98,8 @@ const DataTable = () => {
   } = tableInstance;
 
   const { pageSize, pageIndex } = state;
+
+  const getstatus = {"true": "แข่งขันเสร็จแล้ว", "false": "แข่งขันยังไม่เสร็จ"}
 
   const [selectedSortColumn, setSelectedSortColumn] = useState({
     id: "",
@@ -181,7 +196,6 @@ const DataTable = () => {
                       key={columnIndex}
                       fontSize="16.5px"
                       color={"#Dfdfe8"}
-                      bg-color={columnIndex % 2 === 1 ? "pink" : "green"}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
                       {/* This will render the Title of column */}
@@ -200,39 +214,59 @@ const DataTable = () => {
                 </Tr>
               ))}
             </Thead>
-
             <Tbody className="body1" p="1em" {...getTableBodyProps()}>
-            {page && page.length > 0 ? (
-                page.map((row) => {
-                  console.log(row);
-                  prepareRow(row);
-                  return (
-                    <Tr className="tr1" {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <Td
-                            className="td1"
-                            fontSize="15px"
-                            bg="white"
-                            color={"black"}
-                            {...cell.getCellProps()}
-                          >
-                            {cell.render("Cell")}{" "}
-                          </Td>
-                        );
-                      })}
-                    </Tr>
-                  );
-                })
-              ) : (
-                <Text textAlign="center" fontSize="1em" mx="auto">
-                  No Data Found
-                </Text>
-              )}
+              {data.map((doc,index) => {
+                
+                return (
+                  
+                  <Tr className="tr1" key={doc["id"]}>
+                    <Td
+                      className="td1"
+                      fontSize="15px"
+                      bg="white"
+                      color={"black"}
+                    >
+                      {doc["name-a"] + " vs " + doc["name-b"]}
+                    </Td>
+                    <Td
+                      className="td1"
+                      fontSize="15px"
+                      bg="white"
+                      color={"black"}
+                    >
+                      {doc["score-a"] + " : " + doc["score-b"]}
+                    </Td>
+                    <Td
+                      className="td1"
+                      fontSize="15px"
+                      bg="white"
+                      color={"black"}
+                    >
+                      {doc["set-a"] + " : " + doc["set-b"]}
+                    </Td>
+                    <Td
+                      className="td1"
+                      fontSize="15px"
+                      bg="white"
+                      color={"black"}
+                    >
+                      {doc["type"]}
+                    </Td>
+                    <Td
+                      className="td1"
+                      fontSize="15px"
+                      bg="white"
+                      color={"black"}
+                    >
+                      
+                      {getstatus[String(doc["finished"])]}
+                    </Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
           </Table>
 
-          
           {/* go to page button */}
         </Box>
         <Flex
