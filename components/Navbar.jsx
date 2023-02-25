@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useRouter } from 'next/router'
+import React from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import QRCode from "react-qr-code";
 import {
   Box,
@@ -38,6 +39,7 @@ import {
   Input,
   useToast,
   Image,
+  Portal,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -49,7 +51,7 @@ import Link from "next/link";
 import modalButton from "@/pages/modalButton";
 
 export default function WithSubnavigation() {
-  let router= useRouter()
+  let router = useRouter();
   const toast = useToast();
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
@@ -85,9 +87,9 @@ export default function WithSubnavigation() {
   }, [id]);
 
   function handleChange(e) {
-    setInput(e.target.value)
-}
-
+    setInput(e.target.value);
+  }
+  const initRef = React.useRef();
 
   return (
     <Box>
@@ -116,18 +118,12 @@ export default function WithSubnavigation() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex
-          justify={{ base: "center", md: "start" }}
-          marginLeft={5}
-        >
+        <Flex justify={{ base: "center", md: "start" }} marginLeft={5}>
           <Link href="/">
             <Image src="GameTrackers.svg" alt="logoooo" />
           </Link>
         </Flex>
-        <Flex
-          flex={{ base: 1 }}
-          justify={{ base: "center", md: "start" }}
-        >
+        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Flex display={{ base: "none", md: "flex" }}>
             <DesktopNav />
           </Flex>
@@ -202,24 +198,69 @@ export default function WithSubnavigation() {
                 </Flex>
                 <br />
                 <Center>
-                  <Flex w="40%" justifyContent="space-around" marginLeft="5">
-                      <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
-                        router.push('/scoreboardForFB/scoreboardID')
-                      }}>
-                        Track
-                      </Button>
+                  <Flex w="70%" justifyContent="space-around" marginLeft="5">
+                    <Button
+                      isDisabled={!viewCanClick}
+                      colorScheme="blue"
+                      onClick={() => {
+                        router.push("/scoreboardForFB/scoreboardID");
+                      }}
+                    >
+                      Track
+                    </Button>
 
-                      <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
-                        router.push('/viewscore')
-                      }}> 
-                        View
-                      </Button>
-                      <Button  colorScheme="blue" onClick={(e)=>{
+                    <Button
+                      isDisabled={!viewCanClick}
+                      colorScheme="blue"
+                      onClick={() => {
+                        router.push("/viewscore");
+                      }}
+                    >
+                      View
+                    </Button>
+                    <Popover
+                      closeOnBlur={false}
+                      placement="bottom"
+                      initialFocusRef={initRef}
+                    >
+                      {({ isOpen, onClose }) => (
+                        <>
+                          <PopoverTrigger>
+                            <Button>
+                              Click to {isOpen ? "close" : "open"}
+                            </Button>
+                          </PopoverTrigger>
+                          <Portal>
+                            <PopoverContent>
+                              <PopoverHeader>SCAN</PopoverHeader>
+                              <PopoverCloseButton />
+                              <PopoverBody>
+                                {/* <Button
+                  mt={4}
+                  colorScheme='blue'
+                  onClick={(e)=>{
+                    onClose();
+                    handleChange(e)
+                  }}
+                  ref={initRef}
+                >
+                  Qr-code
+                </Button> */}
+                                <Box>
+                                  <QRCode value={input} />
+                                </Box>
+                              </PopoverBody>
+                              <PopoverFooter>QR-CODE</PopoverFooter>
+                            </PopoverContent>
+                          </Portal>
+                        </>
+                      )}
+                    </Popover>
+                    {/* <Button  colorScheme="blue" onClick={(e)=>{
                         handleChange(e)
                       }}> 
                         Qr-code
-                      </Button>
-                      <QRCode value={input} />
+                      </Button> */}
                   </Flex>
                 </Center>
               </PopoverBody>
