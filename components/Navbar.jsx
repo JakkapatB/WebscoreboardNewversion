@@ -196,16 +196,17 @@ export default function WithSubnavigation() {
                 <br />
                 <Center>
                   <Flex w="40%" justifyContent="space-around">
-                    <Link isExternal href="/scoreboardForFB/id">
-                      <Button isDisabled={!viewCanClick} colorScheme="blue">
+                    <Link isExternal href="/scoreboardForFB/id" >
+                      <Button isDisabled={!viewCanClick} colorScheme="blue" >
                         Track
                       </Button>
                     </Link>
 
-                    <Link href="/viewscore/" isExternal><Button isDisabled={!viewCanClick} colorScheme="blue">
-                      View
-                    </Button></Link>
-                    
+                    <Link href="/viewscore/" isExternal>
+                      <Button isDisabled={!viewCanClick} colorScheme="blue">
+                        View
+                      </Button>
+                    </Link>
                   </Flex>
                 </Center>
               </PopoverBody>

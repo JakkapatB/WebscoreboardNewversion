@@ -309,6 +309,7 @@ function scoreboard() {
     reState(scoreArr);
     });
   },[])
+  
 
   return (
     // Container of Scoreboard
