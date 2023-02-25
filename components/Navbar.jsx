@@ -21,7 +21,6 @@ import {
   useBreakpointValue,
   useDisclosure,
   Center,
-  Image,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -59,12 +58,20 @@ export default function WithSubnavigation() {
   });
   const { isOpen, onToggle } = useDisclosure();
   const [input, setInput] = useState("");
+  const [viewCanClick, setViewCanClick] = useState(false);
   const handleInputChange = (e) => {
     setInput(e.target.value);
     // setIDinput(e.target.value)
   };
   const isError = input === "";
+  useEffect(() => {
+    if (viewCanClick) {
+      setViewCanClick(false);
+    }
+  }, [isError]);
+
   const idSetting = () => {
+    setViewCanClick(true);
     setID(input);
     console.log(input);
   };
@@ -101,18 +108,19 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex
-          justify={{ base: "center", md: "start" }}
-          marginLeft={5}
-        >
-          <Link href="/">
-            <Image src="GameTrackers.svg" alt="logo" />
-          </Link>
-        </Flex>
-        <Flex
           flex={{ base: 1 }}
           justify={{ base: "center", md: "start" }}
           marginLeft={5}
         >
+          <Link href="/">
+            <Text
+              textAlign={useBreakpointValue({ base: "center", md: "left" })}
+              fontFamily={"heading"}
+              color={useColorModeValue("#fcfcfc", "white")}
+            >
+              Logooooooo
+            </Text>
+          </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -137,7 +145,7 @@ export default function WithSubnavigation() {
                   bg: "#ec4156",
                 }}
               >
-                Track
+                View
               </Button>
             </PopoverTrigger>
             <PopoverContent w="40vw">
@@ -185,8 +193,20 @@ export default function WithSubnavigation() {
                     Select ID
                   </Button>
                 </Flex>
+                <br />
                 <Center>
-                  <Button colorScheme="blue">View</Button>
+                  <Flex w="40%" justifyContent="space-around">
+                    <Link isExternal href="/scoreboardForFB/id">
+                      <Button isDisabled={!viewCanClick} colorScheme="blue">
+                        Track
+                      </Button>
+                    </Link>
+
+                    <Link href="/viewscore/" isExternal><Button isDisabled={!viewCanClick} colorScheme="blue">
+                      View
+                    </Button></Link>
+                    
+                  </Flex>
                 </Center>
               </PopoverBody>
             </PopoverContent>

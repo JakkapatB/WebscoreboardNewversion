@@ -22,6 +22,8 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  isError,
+  Link,
 } from "@chakra-ui/react";
 import RadioCard from "./RadioCard";
 import {
@@ -63,6 +65,12 @@ function index() {
   const [teamAname, setTeamAName] = useState("");
   const [teamBname, setTeamBName] = useState("");
   const [typesport, setTypeSport] = useState("");
+  const [viewCanClick, setViewCanClick] = useState(false);
+  useEffect(()=>{
+    if(teamAname === "" || teamBname === "" || typesport === "") {
+      setViewCanClick(false)
+    }
+  },[])
 
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
@@ -271,7 +279,7 @@ function index() {
                   </Stack>
                 </Center>
 
-                <Flex w="20%" justifyContent="space-around" p={2}>
+                <Flex w="30%" justifyContent="space-around" p={2}>
                   {/* <Button
                   w={"40%"}
                     colorScheme="blue"
@@ -300,11 +308,13 @@ function index() {
                         isClosable: true,
                       });
                       sportSetting();
+                      setViewCanClick(true)
                     }}
                   >
-                    Select Sport
+                    Save
                   </Button>
                   <Button
+                  isDisabled={!viewCanClick}
                     colorScheme="blue"
                     onClick={() => {
                       toast({
@@ -320,6 +330,7 @@ function index() {
                   >
                     Go Track
                   </Button>
+
                   {/* <Button colorScheme="blue">Join</Button> */}
                 </Flex>
                 <br />
