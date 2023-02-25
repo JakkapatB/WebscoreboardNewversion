@@ -119,9 +119,8 @@ export default function WithSubnavigation() {
         <Flex
           flex={{ base: 1 }}
           justify={{ base: "center", md: "start" }}
-          marginLeft={5}
         >
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+          <Flex display={{ base: "none", md: "flex" }}>
             <DesktopNav />
           </Flex>
         </Flex>
