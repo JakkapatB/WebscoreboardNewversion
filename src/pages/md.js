@@ -166,7 +166,7 @@ export async function updateData(id, score_a, score_b, set_a, set_b, type, finis
     {
 
         const frankDocRef = doc(db, "record", id);
-        await setDoc(frankDocRef, {
+        await updateDoc(frankDocRef, {
             "score-a": score_a,
             "set-a": set_a,
             "score-b": score_b,
