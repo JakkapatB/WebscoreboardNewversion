@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/router'
 import {
   Box,
   Flex,
@@ -47,6 +48,7 @@ import Link from "next/link";
 import modalButton from "@/pages/modalButton";
 
 export default function WithSubnavigation() {
+  let router= useRouter()
   const toast = useToast();
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
@@ -113,7 +115,7 @@ export default function WithSubnavigation() {
           marginLeft={5}
         >
           <Link href="/">
-            <Image src="GameTrackers.svg" alt="logo" />
+            <Image src="GameTrackers.svg" alt="logoooo" />
           </Link>
         </Flex>
         <Flex
@@ -195,16 +197,17 @@ export default function WithSubnavigation() {
                 <br />
                 <Center>
                   <Flex w="40%" justifyContent="space-around">
-                    <Link isExternal href="/scoreboardForFB/id">
-                      <Button isDisabled={!viewCanClick} colorScheme="blue">
+                      <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
+                        router.push('/scoreboardForFB/'+"id")
+                      }}>
                         Track
                       </Button>
-                    </Link>
 
-                    <Link href="/viewscore/" isExternal><Button isDisabled={!viewCanClick} colorScheme="blue">
-                      View
-                    </Button></Link>
-                    
+                      <Button isDisabled={!viewCanClick} colorScheme="blue" onClick={()=>{
+                        router.push('/viewscore')
+                      }}> 
+                        View
+                      </Button>
                   </Flex>
                 </Center>
               </PopoverBody>

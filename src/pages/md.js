@@ -83,7 +83,7 @@ export async function addNew(id, score_a, score_b, set_a, set_b, type, finished,
     //     "type": type,
     //     "finished": finished
     // });
-
+    let returnedID;
     await addDoc(collection(db, "record"), {
         "score-a": score_a,
         "set-a": set_a,
@@ -93,7 +93,10 @@ export async function addNew(id, score_a, score_b, set_a, set_b, type, finished,
         "finished": finished,
         "name-a": teamNameA,
         "name-b": teamNameB
+    }).then((docRef)=>{
+        returnedID = docRef.id
     });
+    return returnedID;
 }
 // let dt = 'ok'
 
