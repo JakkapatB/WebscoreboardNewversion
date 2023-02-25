@@ -35,7 +35,7 @@ import {
 } from "@chakra-ui/react";
 
 function index() {
-  let router= useRouter()
+  let router = useRouter()
   const [id, setID] = useState(() => {
     // const saved = localStorage.getItem("id");
     if (typeof window !== "undefined") {
@@ -68,11 +68,11 @@ function index() {
   const [teamBname, setTeamBName] = useState("");
   const [typesport, setTypeSport] = useState("");
   const [viewCanClick, setViewCanClick] = useState(false);
-  useEffect(()=>{
-    if(teamAname === "" || teamBname === "" || typesport === "") {
+  useEffect(() => {
+    if (teamAname === "" || teamBname === "" || typesport === "") {
       setViewCanClick(false)
     }
-  },[])
+  }, [])
 
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
@@ -166,28 +166,39 @@ function index() {
   const [placement, setPlacement] = React.useState("bottom");
 
   return (
-    <Container maxW="100vw" h="100vh" bgGradient="linear(to-r,#08203e,#292E49)">
-      <Container
-        maxW="100vw"
-        h="100vh"
-        centerContent
-        // pos="absolute"
+    <Stack
+      minH={'100vh'}
+      bgGradient="linear(to-r,#08203e,#292E49)"
+      direction={'column'}
+      align='center'
+      justify={'center'}
+      backgroundImage={
+        './bg.jpg'
+      }
+      backgroundSize={'cover'}
+      backgroundPosition={'center center'}
+      spacing='8'
+    >
+      <Heading as="h1" size="4xl" color="white">
+        GameTracker
+      </Heading>
+      <Button
+        colorScheme={'green'}
+        onClick={onOpen}
+        _hover={{
+          transform: 'translateY(2px)',
+          boxShadow: 'lg',
+        }}
       >
-        <Flex alignItems="center" justifyContent="center" w="100%" h="50vh">
-          <Heading as="h1" size="4xl" color="white">
-            GameTracker
-          </Heading>
-        </Flex>
-        <Button colorScheme="blue" onClick={onOpen}>
-          Create
-        </Button>
-        <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
-            <DrawerBody>
-              <Container maxW="95%" h="50vh" bg="white" centerContent>
-                {/* <Heading as="h2" size="xl" p={6}>
+        Create
+      </Button>
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
+          <DrawerBody>
+            <Container maxW="95%" h="50vh" bg="white" centerContent>
+              {/* <Heading as="h2" size="xl" p={6}>
                   Enter Your ID
                 </Heading>
 
@@ -225,34 +236,34 @@ function index() {
                     Select ID
                   </Button>
                 </Flex> */}
-                <br />
-                <Flex alignItems={"center"}>
-                  <FormControl isRequired>
-                    <FormLabel>First team's name</FormLabel>
-                    <Input
-                      placeholder="First team's name"
-                      type="word"
-                      value={teamAname}
-                      onChange={handleNameOfTeamAChange}
-                    />
-                  </FormControl>
-                  <Heading pl={10} pr={10}>
-                    VS
-                  </Heading>
-                  <FormControl isRequired>
-                    <FormLabel>Second team's name</FormLabel>
-                    <Input
-                      placeholder="Second team's name"
-                      type="word"
-                      value={teamBname}
-                      onChange={handleNameOfTeamBChange}
-                    />
-                  </FormControl>
-                </Flex>
+              <br />
+              <Flex alignItems={"center"}>
+                <FormControl isRequired>
+                  <FormLabel>First team's name</FormLabel>
+                  <Input
+                    placeholder="First team's name"
+                    type="word"
+                    value={teamAname}
+                    onChange={handleNameOfTeamAChange}
+                  />
+                </FormControl>
+                <Heading pl={10} pr={10}>
+                  VS
+                </Heading>
+                <FormControl isRequired>
+                  <FormLabel>Second team's name</FormLabel>
+                  <Input
+                    placeholder="Second team's name"
+                    type="word"
+                    value={teamBname}
+                    onChange={handleNameOfTeamBChange}
+                  />
+                </FormControl>
+              </Flex>
 
-                <br />
+              <br />
 
-                {/* <HStack {...group} p={10}>
+              {/* <HStack {...group} p={10}>
           {options.map((value) => {
             const radio = getRadioProps({ value });
             return (
@@ -262,27 +273,27 @@ function index() {
             );
           })}
         </HStack> */}
-                <Center p={5}>
-                  <Stack {...getRootProps()} w="50vw">
-                    <Text align="center" w="100%">
-                      The selected sport is: {value}
-                    </Text>
-                    <HStack justifyContent="center">
-                      {avatars.map((avatar) => {
-                        return (
-                          <CustomRadio
-                            key={avatar.name}
-                            image={avatar.image}
-                            {...getRadioProps({ value: avatar.name })}
-                          />
-                        );
-                      })}
-                    </HStack>
-                  </Stack>
-                </Center>
+              <Center p={5}>
+                <Stack {...getRootProps()} w="50vw">
+                  <Text align="center" w="100%">
+                    The selected sport is: {value}
+                  </Text>
+                  <HStack justifyContent="center">
+                    {avatars.map((avatar) => {
+                      return (
+                        <CustomRadio
+                          key={avatar.name}
+                          image={avatar.image}
+                          {...getRadioProps({ value: avatar.name })}
+                        />
+                      );
+                    })}
+                  </HStack>
+                </Stack>
+              </Center>
 
-                <Flex w="30%" justifyContent="space-around" p={2}>
-                  {/* <Button
+              <Flex w="30%" justifyContent="space-around" p={2}>
+                {/* <Button
                   w={"40%"}
                     colorScheme="blue"
                     onClick={() =>
@@ -298,59 +309,58 @@ function index() {
                     Set name
                   </Button> */}
 
-                  {/* <Button colorScheme="blue">Join</Button> */}
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => {
-                      toast({
-                        title: "Tracker created.",
-                        description: "We've created your sport tracker for you.",
-                        status: "success",
-                        duration: 4500,
-                        isClosable: true,
-                      });
-                      sportSetting();
-                      setViewCanClick(true)
-                    }}
-                  >
-                    Save
-                  </Button>
-                  <Button
+                {/* <Button colorScheme="blue">Join</Button> */}
+                <Button
+                  colorScheme="blue"
+                  onClick={() => {
+                    toast({
+                      title: "Tracker created.",
+                      description: "We've created your sport tracker for you.",
+                      status: "success",
+                      duration: 4500,
+                      isClosable: true,
+                    });
+                    sportSetting();
+                    setViewCanClick(true)
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
                   isDisabled={!viewCanClick}
-                    colorScheme="blue"
-                    onClick={() => {
-                      toast({
-                        title: "Tracker created.",
-                        description: "We've created your sport tracker for you.",
-                        status: "success",
-                        duration: 4500,
-                        isClosable: true,
-                      });
-                      const returnedID = async() => {
-                        let x = await addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname)
-                        console.log("return ID : " + x);
-                        localStorage.setItem("id", x);
-                        router.push('/scoreboardForFB/scoreboardID')
-                      }
-                      // addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
-                      returnedID();
-                      console.log("addNew")
-                      sportSetting();
+                  colorScheme="blue"
+                  onClick={() => {
+                    toast({
+                      title: "Tracker created.",
+                      description: "We've created your sport tracker for you.",
+                      status: "success",
+                      duration: 4500,
+                      isClosable: true,
+                    });
+                    const returnedID = async () => {
+                      let x = await addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname)
+                      console.log("return ID : " + x);
+                      localStorage.setItem("id", x);
+                      router.push('/scoreboardForFB/scoreboardID')
+                    }
+                    // addNew("", 0, 0, 0, 0, typesport, false, teamAname, teamBname);
+                    returnedID();
+                    console.log("addNew")
+                    sportSetting();
 
-                    }}
-                  >
-                    Go Track
-                  </Button>
+                  }}
+                >
+                  Go Track
+                </Button>
 
-                  {/* <Button colorScheme="blue">Join</Button> */}
-                </Flex>
-                <br />
-              </Container>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      </Container>
-    </Container>
+                {/* <Button colorScheme="blue">Join</Button> */}
+              </Flex>
+              <br />
+            </Container>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Stack>
   );
 }
 
