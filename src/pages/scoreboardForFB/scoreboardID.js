@@ -364,6 +364,11 @@ function scoreboardIDpage() {
       {/* {showWinner} */}
 
       <VStack pos="absolute" spacing={1}>
+        <Center><Box
+        bg="#ffffff"
+        w="100%"
+        p={3}
+        color="black">ID : {yourID}</Box></Center>
         {/* Team name and Button */}
         <Flex>
           {/* Reset button */}
